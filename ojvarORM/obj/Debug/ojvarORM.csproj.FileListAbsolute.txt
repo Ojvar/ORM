@@ -1,0 +1,39 @@
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\ojvarORM.exe
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\ojvarORM.pdb
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.csprojResolveAssemblyReference.cache
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.Properties.Resources.resources
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.csproj.GenerateResource.Cache
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.exe
+c:\users\ojvar\documents\visual studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.pdb
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\BLL.dll
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\DAL.dll
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\BLL.pdb
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\DAL.pdb
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\obj\Debug\ojvarORM.Form1.resources
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ojvarORM\ojvarORM\bin\Debug\ojvarORM.exe.config
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\ojvarORM.exe.config
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.exe
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.pdb
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\ojvarORM.exe
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\ojvarORM.pdb
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\BLL.dll
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\DAL.dll
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\BLL.pdb
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\bin\Debug\DAL.pdb
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.csprojResolveAssemblyReference.cache
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.Form1.resources
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.Properties.Resources.resources
+C:\Users\Ojvar\Desktop\xxxx\ojvarORM\obj\Debug\ojvarORM.csproj.GenerateResource.Cache
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\ojvarORM.exe.config
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.exe
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\ojvarORM.exe
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\ojvarORM.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\BLL.dll
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\DAL.dll
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\BLL.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\bin\Debug\DAL.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.csprojResolveAssemblyReference.cache
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.Form1.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.Properties.Resources.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ojvarORM\obj\Debug\ojvarORM.csproj.GenerateResource.Cache

@@ -1,0 +1,42 @@
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csprojResolveAssemblyReference.cache
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.SqlGenerator.resources
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Properties.Resources.resources
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csproj.GenerateResource.Cache
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.exe
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.pdb
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.exe
+c:\users\ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.pdb
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ClassGenerator\ClassGenerator\bin\Debug\DAL.dll
+C:\Users\Ojvar\Documents\Visual Studio 2015\Projects\ClassGenerator\ClassGenerator\bin\Debug\DAL.pdb
+C:\Users\Ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Database.resources
+C:\Users\Ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Table.resources
+C:\Users\Ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Field.resources
+C:\Users\Ojvar\documents\visual studio 2015\Projects\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Class.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.exe
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csprojResolveAssemblyReference.cache
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Class.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Database.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Field.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Table.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.SqlGenerator.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Properties.Resources.resources
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csproj.GenerateResource.Cache
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.exe
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.pdb
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\DAL.dll
+C:\Users\Ojvar\Desktop\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\DAL.pdb
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.exe
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.pdb
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.exe
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\ClassGenerator.pdb
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\DAL.dll
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\bin\Debug\DAL.pdb
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csprojResolveAssemblyReference.cache
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Class.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Database.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Field.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Resources.Table.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.SqlGenerator.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.Properties.Resources.resources
+D:\Source\OjvarORM\ClassGenerator\ClassGenerator\obj\Debug\ClassGenerator.csproj.GenerateResource.Cache
