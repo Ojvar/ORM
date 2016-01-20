@@ -49,6 +49,8 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tablesGrid = new System.Windows.Forms.DataGridView();
 			this.fieldsTabPage = new System.Windows.Forms.TabPage();
+			this.savePathTextbox = new System.Windows.Forms.TextBox();
+			this.label7 = new System.Windows.Forms.Label();
 			this.namespaceTextbox = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.entityBaseCombobox = new System.Windows.Forms.ComboBox();
@@ -62,8 +64,7 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.quitMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.label7 = new System.Windows.Forms.Label();
-			this.savePathTextbox = new System.Windows.Forms.TextBox();
+			this.saveToFileCheckbox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.pageTabControl.SuspendLayout();
 			this.connectionTabPage.SuspendLayout();
@@ -79,6 +80,8 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.messageLabel);
 			this.groupBox1.Controls.Add(this.connectToDbButton);
 			this.groupBox1.Controls.Add(this.passwordTextbox);
@@ -93,16 +96,17 @@
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox1.Size = new System.Drawing.Size(1197, 251);
+			this.groupBox1.Size = new System.Drawing.Size(1120, 161);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Connection Parameters";
 			// 
 			// messageLabel
 			// 
+			this.messageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.messageLabel.AutoSize = true;
 			this.messageLabel.ForeColor = System.Drawing.Color.Maroon;
-			this.messageLabel.Location = new System.Drawing.Point(17, 213);
+			this.messageLabel.Location = new System.Drawing.Point(17, 123);
 			this.messageLabel.Name = "messageLabel";
 			this.messageLabel.Size = new System.Drawing.Size(118, 18);
 			this.messageLabel.TabIndex = 5;
@@ -111,7 +115,7 @@
 			// connectToDbButton
 			// 
 			this.connectToDbButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.connectToDbButton.Location = new System.Drawing.Point(1067, 202);
+			this.connectToDbButton.Location = new System.Drawing.Point(990, 112);
 			this.connectToDbButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectToDbButton.Name = "connectToDbButton";
 			this.connectToDbButton.Size = new System.Drawing.Size(124, 41);
@@ -206,7 +210,7 @@
 			this.pageTabControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageTabControl.Name = "pageTabControl";
 			this.pageTabControl.SelectedIndex = 0;
-			this.pageTabControl.Size = new System.Drawing.Size(1218, 587);
+			this.pageTabControl.Size = new System.Drawing.Size(1125, 411);
 			this.pageTabControl.TabIndex = 1;
 			// 
 			// connectionTabPage
@@ -216,7 +220,7 @@
 			this.connectionTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectionTabPage.Name = "connectionTabPage";
 			this.connectionTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.connectionTabPage.Size = new System.Drawing.Size(1210, 556);
+			this.connectionTabPage.Size = new System.Drawing.Size(1133, 380);
 			this.connectionTabPage.TabIndex = 0;
 			this.connectionTabPage.Text = "Connection";
 			this.connectionTabPage.UseVisualStyleBackColor = true;
@@ -230,7 +234,7 @@
 			this.databaseTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.databaseTabPage.Name = "databaseTabPage";
 			this.databaseTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.databaseTabPage.Size = new System.Drawing.Size(1210, 556);
+			this.databaseTabPage.Size = new System.Drawing.Size(1133, 380);
 			this.databaseTabPage.TabIndex = 1;
 			this.databaseTabPage.Text = "Database Details";
 			this.databaseTabPage.UseVisualStyleBackColor = true;
@@ -238,7 +242,7 @@
 			// loadFieldsButton
 			// 
 			this.loadFieldsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.loadFieldsButton.Location = new System.Drawing.Point(1080, 507);
+			this.loadFieldsButton.Location = new System.Drawing.Point(1003, 331);
 			this.loadFieldsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.loadFieldsButton.Name = "loadFieldsButton";
 			this.loadFieldsButton.Size = new System.Drawing.Size(124, 41);
@@ -249,7 +253,7 @@
 			// tablesRefreshButton
 			// 
 			this.tablesRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.tablesRefreshButton.Location = new System.Drawing.Point(950, 507);
+			this.tablesRefreshButton.Location = new System.Drawing.Point(873, 331);
 			this.tablesRefreshButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tablesRefreshButton.Name = "tablesRefreshButton";
 			this.tablesRefreshButton.Size = new System.Drawing.Size(124, 41);
@@ -267,7 +271,7 @@
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox2.Size = new System.Drawing.Size(1196, 491);
+			this.groupBox2.Size = new System.Drawing.Size(1119, 315);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Table(s) List";
@@ -293,11 +297,12 @@
 			this.tablesGrid.ReadOnly = true;
 			this.tablesGrid.RowTemplate.Height = 24;
 			this.tablesGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.tablesGrid.Size = new System.Drawing.Size(1182, 455);
+			this.tablesGrid.Size = new System.Drawing.Size(1105, 279);
 			this.tablesGrid.TabIndex = 0;
 			// 
 			// fieldsTabPage
 			// 
+			this.fieldsTabPage.Controls.Add(this.saveToFileCheckbox);
 			this.fieldsTabPage.Controls.Add(this.savePathTextbox);
 			this.fieldsTabPage.Controls.Add(this.label7);
 			this.fieldsTabPage.Controls.Add(this.namespaceTextbox);
@@ -310,15 +315,33 @@
 			this.fieldsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.fieldsTabPage.Name = "fieldsTabPage";
 			this.fieldsTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.fieldsTabPage.Size = new System.Drawing.Size(1210, 556);
+			this.fieldsTabPage.Size = new System.Drawing.Size(1117, 380);
 			this.fieldsTabPage.TabIndex = 3;
 			this.fieldsTabPage.Text = "Fields";
 			this.fieldsTabPage.UseVisualStyleBackColor = true;
 			// 
+			// savePathTextbox
+			// 
+			this.savePathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.savePathTextbox.Location = new System.Drawing.Point(134, 340);
+			this.savePathTextbox.Name = "savePathTextbox";
+			this.savePathTextbox.Size = new System.Drawing.Size(597, 26);
+			this.savePathTextbox.TabIndex = 2;
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(54, 344);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(74, 18);
+			this.label7.TabIndex = 5;
+			this.label7.Text = "Save Path";
+			// 
 			// namespaceTextbox
 			// 
 			this.namespaceTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.namespaceTextbox.Location = new System.Drawing.Point(631, 484);
+			this.namespaceTextbox.Location = new System.Drawing.Point(478, 308);
 			this.namespaceTextbox.Name = "namespaceTextbox";
 			this.namespaceTextbox.Size = new System.Drawing.Size(253, 26);
 			this.namespaceTextbox.TabIndex = 1;
@@ -327,7 +350,7 @@
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(540, 487);
+			this.label6.Location = new System.Drawing.Point(387, 312);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(85, 18);
 			this.label6.TabIndex = 5;
@@ -338,16 +361,16 @@
 			this.entityBaseCombobox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.entityBaseCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.entityBaseCombobox.FormattingEnabled = true;
-			this.entityBaseCombobox.Location = new System.Drawing.Point(134, 484);
+			this.entityBaseCombobox.Location = new System.Drawing.Point(134, 308);
 			this.entityBaseCombobox.Name = "entityBaseCombobox";
-			this.entityBaseCombobox.Size = new System.Drawing.Size(336, 26);
+			this.entityBaseCombobox.Size = new System.Drawing.Size(247, 26);
 			this.entityBaseCombobox.TabIndex = 0;
 			// 
 			// label5
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(13, 487);
+			this.label5.Location = new System.Drawing.Point(13, 312);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(115, 18);
 			this.label5.TabIndex = 1;
@@ -356,11 +379,11 @@
 			// fieldsRefreshButton
 			// 
 			this.fieldsRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.fieldsRefreshButton.Location = new System.Drawing.Point(950, 508);
+			this.fieldsRefreshButton.Location = new System.Drawing.Point(857, 332);
 			this.fieldsRefreshButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.fieldsRefreshButton.Name = "fieldsRefreshButton";
 			this.fieldsRefreshButton.Size = new System.Drawing.Size(124, 41);
-			this.fieldsRefreshButton.TabIndex = 2;
+			this.fieldsRefreshButton.TabIndex = 3;
 			this.fieldsRefreshButton.Text = "Refresh";
 			this.fieldsRefreshButton.UseVisualStyleBackColor = true;
 			// 
@@ -374,7 +397,7 @@
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox3.Size = new System.Drawing.Size(1196, 469);
+			this.groupBox3.Size = new System.Drawing.Size(1103, 293);
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Field(s) List";
@@ -399,17 +422,17 @@
 			this.fieldsGrid.Name = "fieldsGrid";
 			this.fieldsGrid.RowTemplate.Height = 24;
 			this.fieldsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.fieldsGrid.Size = new System.Drawing.Size(1182, 433);
+			this.fieldsGrid.Size = new System.Drawing.Size(1089, 257);
 			this.fieldsGrid.TabIndex = 0;
 			// 
 			// generateScriptButton
 			// 
 			this.generateScriptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.generateScriptButton.Location = new System.Drawing.Point(1080, 508);
+			this.generateScriptButton.Location = new System.Drawing.Point(987, 332);
 			this.generateScriptButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.generateScriptButton.Name = "generateScriptButton";
 			this.generateScriptButton.Size = new System.Drawing.Size(124, 41);
-			this.generateScriptButton.TabIndex = 3;
+			this.generateScriptButton.TabIndex = 4;
 			this.generateScriptButton.Text = "Generate";
 			this.generateScriptButton.UseVisualStyleBackColor = true;
 			// 
@@ -419,7 +442,7 @@
 			this.scriptTabPage.Location = new System.Drawing.Point(4, 27);
 			this.scriptTabPage.Name = "scriptTabPage";
 			this.scriptTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.scriptTabPage.Size = new System.Drawing.Size(1210, 556);
+			this.scriptTabPage.Size = new System.Drawing.Size(1133, 380);
 			this.scriptTabPage.TabIndex = 2;
 			this.scriptTabPage.Text = "Script";
 			this.scriptTabPage.UseVisualStyleBackColor = true;
@@ -434,7 +457,7 @@
 			this.scriptTextbox.Multiline = true;
 			this.scriptTextbox.Name = "scriptTextbox";
 			this.scriptTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.scriptTextbox.Size = new System.Drawing.Size(1198, 544);
+			this.scriptTextbox.Size = new System.Drawing.Size(1121, 368);
 			this.scriptTextbox.TabIndex = 0;
 			// 
 			// menuStrip1
@@ -446,7 +469,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-			this.menuStrip1.Size = new System.Drawing.Size(1246, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(1153, 28);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -461,32 +484,25 @@
 			// quitMenu
 			// 
 			this.quitMenu.Name = "quitMenu";
-			this.quitMenu.Size = new System.Drawing.Size(108, 26);
+			this.quitMenu.Size = new System.Drawing.Size(181, 26);
 			this.quitMenu.Text = "Quit";
 			// 
-			// label7
+			// saveToFileCheckbox
 			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(43, 519);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(85, 18);
-			this.label7.TabIndex = 5;
-			this.label7.Text = "Namespace";
-			// 
-			// savePathTextbox
-			// 
-			this.savePathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.savePathTextbox.Location = new System.Drawing.Point(134, 516);
-			this.savePathTextbox.Name = "savePathTextbox";
-			this.savePathTextbox.Size = new System.Drawing.Size(750, 26);
-			this.savePathTextbox.TabIndex = 4;
+			this.saveToFileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.saveToFileCheckbox.AutoSize = true;
+			this.saveToFileCheckbox.Location = new System.Drawing.Point(737, 344);
+			this.saveToFileCheckbox.Name = "saveToFileCheckbox";
+			this.saveToFileCheckbox.Size = new System.Drawing.Size(110, 22);
+			this.saveToFileCheckbox.TabIndex = 6;
+			this.saveToFileCheckbox.Text = "Save To File";
+			this.saveToFileCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// SqlGenerator
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1246, 646);
+			this.ClientSize = new System.Drawing.Size(1153, 470);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.pageTabControl);
 			this.Font = new System.Drawing.Font("Tahoma", 10F);
@@ -549,6 +565,7 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox savePathTextbox;
 		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.CheckBox saveToFileCheckbox;
 	}
 }
 

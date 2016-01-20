@@ -19,3 +19,10 @@ C:\Users\Ojvar\Desktop\OjvarORM\BLL\bin\Debug\DAL.pdb
 C:\Users\Ojvar\Desktop\OjvarORM\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 C:\Users\Ojvar\Desktop\OjvarORM\BLL\obj\Debug\BLL.dll
 C:\Users\Ojvar\Desktop\OjvarORM\BLL\obj\Debug\BLL.pdb
+D:\Source\OjvarORM\BLL\bin\Debug\BLL.dll
+D:\Source\OjvarORM\BLL\bin\Debug\BLL.pdb
+D:\Source\OjvarORM\BLL\bin\Debug\DAL.dll
+D:\Source\OjvarORM\BLL\bin\Debug\DAL.pdb
+D:\Source\OjvarORM\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\Source\OjvarORM\BLL\obj\Debug\BLL.dll
+D:\Source\OjvarORM\BLL\obj\Debug\BLL.pdb

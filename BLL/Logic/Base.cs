@@ -386,14 +386,14 @@ namespace BLL.Logic
 		/// <param name="criteria"></param>
 		/// <param name="outputAsList"></param>
 		/// <returns></returns>
-		public virtual CommandResult allByPaging (int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true)
+		public virtual CommandResult allByPaging (string viewName, int pageIndex = 1, int pageSize = 100, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true)
 		{
 			CommandResult	result		= new CommandResult ();
 			string			command		= "";
 			string			tableName	= "";
 
 		#region Setup parameters
-			tableName = this.GetType ().Name.Replace ("__", ".");
+			tableName = viewName;
 			command = "SELECT TOP 100 PERCENT COUNT (*) OVER () AS totalRows, base.* FROM " +
 				" (SELECT {5} FROM [{0}] {1}) AS base WHERE (rowNumber BETWEEN {2} AND {3}) {4}"; 
 		#endregion
@@ -455,6 +455,30 @@ namespace BLL.Logic
 			}
 		#endregion
 
+			return result;
+		}
+	
+		/// <summary>
+		/// Read by Paging
+		/// </summary>
+		/// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+		/// <param name="pageSize"></param>
+		/// <param name="criteria"></param>
+		/// <param name="outputAsList"></param>
+		/// <returns></returns>
+		public virtual CommandResult allByPaging (int pageIndex = 1, int pageSize = 100, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true)
+		{
+			CommandResult	result;
+			string			viewName;
+
+			// Prepare
+			result		= new CommandResult ();
+			viewName	= this.GetType ().Name.Replace ("__", ".");
+
+			// Run Query
+			result	= allByPaging (viewName, pageIndex, pageSize, criteria, orderBy, outputAsList);
+
+			// Return result
 			return result;
 		}
 	#endregion

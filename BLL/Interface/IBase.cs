@@ -17,6 +17,7 @@ namespace BLL.Interface
 		CommandResult	delete (object iData, bool closeConnection);
 		CommandResult	validate (object iData);
 		CommandResult	loadForeignKey (object iData, string propertyName, string orderBy, bool outputAsList, bool closeConnection);
+		CommandResult	allByPaging (string viewName, int pageIndex, int pageSize, string criteria, string orderBy, bool outputAsList, bool closeConnection);
 		CommandResult	allByPaging (int pageIndex, int pageSize, string criteria, string orderBy, bool outputAsList, bool closeConnection);
 		CommandResult	allData (string criteria, string orderBy, bool outputAsList , bool closeConnection, params KeyValuePair[] fieldValue);
 	}

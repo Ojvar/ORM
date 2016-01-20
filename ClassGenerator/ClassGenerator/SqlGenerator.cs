@@ -275,10 +275,12 @@ namespace ClassGenerator
 			string logicName;
 			List<string> fieldsScript = new List<string> (); 
 
-			string savePath;
+			string	savePath;
+			bool	saveToFile;
 		#endregion
 
-			// Clear output
+			// Prepare
+			saveToFile			= saveToFileCheckbox.Checked;
 			scriptTextbox.Text	= "";
 
 			if (null != currentTable)
@@ -310,17 +312,33 @@ namespace ClassGenerator
 
 			#region Generate definition
 				entityResult = string.Format (classEntityDef, namespaceValue, entityName, baseClass, fieldStr);
-				logicResult = string.Format (classLogicDef, namespaceValue, logicName, entityName); 
+				logicResult = string.Format (classLogicDef, namespaceValue, logicName, entityName);
 			#endregion
 
-				
-				// Save to file
+			#region Save to file
 				savePath	= savePathTextbox.Text.Trim ();
-				if ((!string.IsNullOrWhiteSpace (savePath)) && (Directory.Exists (savePath)))
-				{
-					File.WriteAllText (Path.Combine (savePath, entityName + ".cs"), entityResult);
-					File.WriteAllText (Path.Combine (savePath, logicName + ".cs"), logicResult);
-				}
+				if (saveToFile)
+					if (string.IsNullOrWhiteSpace (savePath))
+						MessageBox.Show (this, "Save path is empty!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					else if (!Directory.Exists (savePath))
+						MessageBox.Show (this, "Save path not exists!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					else
+					{
+						string	logicPath;
+						string	entityPath;
+
+						logicPath	= Path.Combine (savePath, "Logic");
+						entityPath	= Path.Combine (savePath, "Entity");
+
+						if (!Directory.Exists (logicPath))
+							Directory.CreateDirectory (logicPath);
+						if (!Directory.Exists (entityPath))
+							Directory.CreateDirectory (entityPath);
+
+						File.WriteAllText (Path.Combine (entityPath, entityName + ".cs"), entityResult);
+						File.WriteAllText (Path.Combine (logicPath, logicName + ".cs"), logicResult);
+					}
+			#endregion
 
 				// Show in output
 				scriptTextbox.Text	= string.Format ("/// AUTO-GENERATE, OJVAR\r\n\r\n/// ENTITY CLASS\r\n{0}\r\n\r\n/// LOGIC CLASS\r\n{1}", entityResult, logicResult);
@@ -391,6 +409,6 @@ namespace ClassGenerator
 
 			return result;
 		}
-	#endregion
+		#endregion
 	}
 }
