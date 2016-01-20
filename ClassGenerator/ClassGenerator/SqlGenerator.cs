@@ -285,7 +285,10 @@ namespace ClassGenerator
 			scriptTextbox.Text	= "";
 
 			if (string.IsNullOrWhiteSpace (namespaceValue))
+			{
 				MessageBox.Show (this, "Specify a namespace!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			else if (null != currentTable)
 			{
 			#region Collect Field data
