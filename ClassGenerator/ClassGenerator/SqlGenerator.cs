@@ -280,10 +280,13 @@ namespace ClassGenerator
 		#endregion
 
 			// Prepare
+			namespaceValue		= namespaceTextbox.Text.Trim ();
 			saveToFile			= saveToFileCheckbox.Checked;
 			scriptTextbox.Text	= "";
 
-			if (null != currentTable)
+			if (string.IsNullOrWhiteSpace (namespaceValue))
+				MessageBox.Show (this, "Specify a namespace!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			else if (null != currentTable)
 			{
 			#region Collect Field data
 				foreach (DataGridViewRow row in fieldsGrid.Rows)
@@ -301,7 +304,6 @@ namespace ClassGenerator
 				classLogicDef = Resources.Class.ClassLogicDefinition;
 				logicName = currentTable.getName ();
 				baseClass = entityBaseCombobox.Text;
-				namespaceValue = namespaceTextbox.Text.Trim ();
 				fieldStr = string.Join ("\r\n", fieldsScript); 
 			#endregion
 
