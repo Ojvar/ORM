@@ -129,8 +129,8 @@ namespace ClassGenerator.Classes
 			SqlDbType	dbType;
 
 			dbType	= getFieldDbType ();
-			result	= TypeHelper.csType[dbType];
 
+			result	= TypeHelper.csType[dbType];	
 			return result;
 		}
 
@@ -347,8 +347,14 @@ namespace ClassGenerator.Classes
 		#endregion
 
 			// Join array items
+			string	fieldName;
+
+			fieldName	= getFieldCsType ().FullName;
+			if (getFieldNullable ())
+				fieldName	= "Nullable<" + fieldName + ">";
+
 			fieldAttr	= string.Format (fieldAttr, string.Join (",", attr));
-			result		= string.Format (propertyBody, fieldAttr, getFieldCsType ().FullName, getFieldName ()); 
+			result		= string.Format (propertyBody, fieldAttr, fieldName, getFieldName ()); 
 
 			return result;
 		}

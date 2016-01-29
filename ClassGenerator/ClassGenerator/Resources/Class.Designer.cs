@@ -61,7 +61,8 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using BLL.Base;
+        ///   Looks up a localized string similar to using System;
+        ///using BLL.Base;
         ///using System.Data;
         ///using BaseBLL = BLL;
         ///
@@ -80,7 +81,8 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using BLL.Base;
+        ///   Looks up a localized string similar to using System;
+        ///using BLL.Base;
         ///using BaseBLL = BLL;
         ///
         ///namespace {0}.BLL.Logic

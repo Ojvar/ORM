@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent ()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.messageLabel = new System.Windows.Forms.Label();
 			this.connectToDbButton = new System.Windows.Forms.Button();
@@ -49,6 +49,7 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tablesGrid = new System.Windows.Forms.DataGridView();
 			this.fieldsTabPage = new System.Windows.Forms.TabPage();
+			this.saveToFileCheckbox = new System.Windows.Forms.CheckBox();
 			this.savePathTextbox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.namespaceTextbox = new System.Windows.Forms.TextBox();
@@ -64,7 +65,6 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.quitMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToFileCheckbox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.pageTabControl.SuspendLayout();
 			this.connectionTabPage.SuspendLayout();
@@ -96,7 +96,7 @@
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox1.Size = new System.Drawing.Size(1120, 161);
+			this.groupBox1.Size = new System.Drawing.Size(1104, 161);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Connection Parameters";
@@ -115,7 +115,7 @@
 			// connectToDbButton
 			// 
 			this.connectToDbButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.connectToDbButton.Location = new System.Drawing.Point(990, 112);
+			this.connectToDbButton.Location = new System.Drawing.Point(974, 112);
 			this.connectToDbButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectToDbButton.Name = "connectToDbButton";
 			this.connectToDbButton.Size = new System.Drawing.Size(124, 41);
@@ -220,7 +220,7 @@
 			this.connectionTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectionTabPage.Name = "connectionTabPage";
 			this.connectionTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.connectionTabPage.Size = new System.Drawing.Size(1133, 380);
+			this.connectionTabPage.Size = new System.Drawing.Size(1117, 380);
 			this.connectionTabPage.TabIndex = 0;
 			this.connectionTabPage.Text = "Connection";
 			this.connectionTabPage.UseVisualStyleBackColor = true;
@@ -234,7 +234,7 @@
 			this.databaseTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.databaseTabPage.Name = "databaseTabPage";
 			this.databaseTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.databaseTabPage.Size = new System.Drawing.Size(1133, 380);
+			this.databaseTabPage.Size = new System.Drawing.Size(1117, 380);
 			this.databaseTabPage.TabIndex = 1;
 			this.databaseTabPage.Text = "Database Details";
 			this.databaseTabPage.UseVisualStyleBackColor = true;
@@ -242,7 +242,7 @@
 			// loadFieldsButton
 			// 
 			this.loadFieldsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.loadFieldsButton.Location = new System.Drawing.Point(1003, 331);
+			this.loadFieldsButton.Location = new System.Drawing.Point(987, 331);
 			this.loadFieldsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.loadFieldsButton.Name = "loadFieldsButton";
 			this.loadFieldsButton.Size = new System.Drawing.Size(124, 41);
@@ -253,7 +253,7 @@
 			// tablesRefreshButton
 			// 
 			this.tablesRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.tablesRefreshButton.Location = new System.Drawing.Point(873, 331);
+			this.tablesRefreshButton.Location = new System.Drawing.Point(857, 331);
 			this.tablesRefreshButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tablesRefreshButton.Name = "tablesRefreshButton";
 			this.tablesRefreshButton.Size = new System.Drawing.Size(124, 41);
@@ -271,7 +271,7 @@
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox2.Size = new System.Drawing.Size(1119, 315);
+			this.groupBox2.Size = new System.Drawing.Size(1104, 315);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Table(s) List";
@@ -280,8 +280,8 @@
 			// 
 			this.tablesGrid.AllowUserToAddRows = false;
 			this.tablesGrid.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.tablesGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.tablesGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.tablesGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -297,7 +297,7 @@
 			this.tablesGrid.ReadOnly = true;
 			this.tablesGrid.RowTemplate.Height = 24;
 			this.tablesGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.tablesGrid.Size = new System.Drawing.Size(1105, 279);
+			this.tablesGrid.Size = new System.Drawing.Size(1090, 279);
 			this.tablesGrid.TabIndex = 0;
 			// 
 			// fieldsTabPage
@@ -319,6 +319,17 @@
 			this.fieldsTabPage.TabIndex = 3;
 			this.fieldsTabPage.Text = "Fields";
 			this.fieldsTabPage.UseVisualStyleBackColor = true;
+			// 
+			// saveToFileCheckbox
+			// 
+			this.saveToFileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.saveToFileCheckbox.AutoSize = true;
+			this.saveToFileCheckbox.Location = new System.Drawing.Point(737, 344);
+			this.saveToFileCheckbox.Name = "saveToFileCheckbox";
+			this.saveToFileCheckbox.Size = new System.Drawing.Size(110, 22);
+			this.saveToFileCheckbox.TabIndex = 6;
+			this.saveToFileCheckbox.Text = "Save To File";
+			this.saveToFileCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// savePathTextbox
 			// 
@@ -406,8 +417,8 @@
 			// 
 			this.fieldsGrid.AllowUserToAddRows = false;
 			this.fieldsGrid.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.fieldsGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.fieldsGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.fieldsGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -442,7 +453,7 @@
 			this.scriptTabPage.Location = new System.Drawing.Point(4, 27);
 			this.scriptTabPage.Name = "scriptTabPage";
 			this.scriptTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.scriptTabPage.Size = new System.Drawing.Size(1133, 380);
+			this.scriptTabPage.Size = new System.Drawing.Size(1117, 380);
 			this.scriptTabPage.TabIndex = 2;
 			this.scriptTabPage.Text = "Script";
 			this.scriptTabPage.UseVisualStyleBackColor = true;
@@ -457,7 +468,7 @@
 			this.scriptTextbox.Multiline = true;
 			this.scriptTextbox.Name = "scriptTextbox";
 			this.scriptTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.scriptTextbox.Size = new System.Drawing.Size(1121, 368);
+			this.scriptTextbox.Size = new System.Drawing.Size(1105, 368);
 			this.scriptTextbox.TabIndex = 0;
 			// 
 			// menuStrip1
@@ -484,19 +495,8 @@
 			// quitMenu
 			// 
 			this.quitMenu.Name = "quitMenu";
-			this.quitMenu.Size = new System.Drawing.Size(181, 26);
+			this.quitMenu.Size = new System.Drawing.Size(108, 26);
 			this.quitMenu.Text = "Quit";
-			// 
-			// saveToFileCheckbox
-			// 
-			this.saveToFileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.saveToFileCheckbox.AutoSize = true;
-			this.saveToFileCheckbox.Location = new System.Drawing.Point(737, 344);
-			this.saveToFileCheckbox.Name = "saveToFileCheckbox";
-			this.saveToFileCheckbox.Size = new System.Drawing.Size(110, 22);
-			this.saveToFileCheckbox.TabIndex = 6;
-			this.saveToFileCheckbox.Text = "Save To File";
-			this.saveToFileCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// SqlGenerator
 			// 

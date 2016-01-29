@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClassEntityDefinition" xml:space="preserve">
-    <value>using BLL.Base;
+    <value>using System;
+using BLL.Base;
 using System.Data;
 using BaseBLL = BLL;
 
@@ -131,7 +132,8 @@ namespace {0}.BLL.Entity
 }}</value>
   </data>
   <data name="ClassLogicDefinition" xml:space="preserve">
-    <value>using BLL.Base;
+    <value>using System;
+using BLL.Base;
 using BaseBLL = BLL;
 
 namespace {0}.BLL.Logic

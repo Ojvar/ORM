@@ -305,7 +305,7 @@ namespace ClassGenerator
 			#region Prepare data
 				classEntityDef = Resources.Class.ClassEntityDefinition;
 				classLogicDef = Resources.Class.ClassLogicDefinition;
-				logicName = currentTable.getName ();
+				logicName = currentTable.getName ().Replace (".", "__");
 				baseClass = entityBaseCombobox.Text;
 				fieldStr = string.Join ("\r\n", fieldsScript); 
 			#endregion
