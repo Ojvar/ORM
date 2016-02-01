@@ -44,7 +44,7 @@ namespace DAL.Base
 				case EnumConnectionType.Database1:
 					userName	= "sa";
 					password	= "1365";
-					database	= "testDB";
+					database	= "amlak";
 					dataSource	= ".";
 					break;
 			}

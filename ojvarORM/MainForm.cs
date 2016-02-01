@@ -19,6 +19,15 @@ namespace ojvarORM
 
 		private void Form1_Load (object sender, EventArgs e)
 		{
+			BLL.Logic.HC__Contracts	bC	= new BLL.Logic.HC__Contracts (DAL.Base.EnumConnectionType.Database1);
+			var	x	= bC.allData ();
+
+			BLL.Entity.HC__Contracts	hcC	= new BLL.Entity.HC__Contracts ();
+
+			hcC.code		= 100;
+			hcC.description	= "Test";
+			hcC.contractType	= "CType";
+			x	= bC.create (hcC);
 		}
 
 		/// <summary>

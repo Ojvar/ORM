@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\Entity\HC__Contracts.cs" />
     <Compile Include="BLL\Entity\relTB.cs" />
     <Compile Include="BLL\Entity\test.cs" />
+    <Compile Include="BLL\Logic\HC__Contracts.cs" />
     <Compile Include="BLL\Logic\relTB.cs" />
     <Compile Include="BLL\Logic\tests.cs" />
     <Compile Include="MainForm.cs">

@@ -43,7 +43,7 @@ namespace DAL.Model
 		/// <summary>
 		/// Extra data
 		/// </summary>
-		public Hashtable extra
+		public object extra
 		{
 			get;
 			set;
