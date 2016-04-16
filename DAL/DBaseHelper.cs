@@ -1,5 +1,5 @@
-﻿using DAL.Base;
-using DAL.Model;
+﻿using BaseDAL.Base;
+using BaseDAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,13 +7,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace DAL
+namespace BaseDAL
 {
 	/// <summary>
 	/// Database Helper
 	/// </summary>
 	public static class DBaseHelper
 	{
+	#region Methods
 		/// <summary>
 		/// Check Connection
 		/// </summary>
@@ -65,6 +66,7 @@ namespace DAL
 		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, bool closeConnection = true, params KeyValuePair[] parameters)
 		{
 			CommandResult	result	= new CommandResult ();
+			const string	C_RET_VALUE	= "@__retValue";
 
 			if (null != connection)
 			{
@@ -81,7 +83,29 @@ namespace DAL
 					if (null != parameters)
 						foreach (KeyValuePair key in parameters)
 							if (null != key)
-								command.Parameters.Add (new SqlParameter (key.key, key.value));
+							{
+								key.value	= (key.value == null ? DBNull.Value : key.value);
+
+								if (!(key.metadata is SqlDbType))
+									command.Parameters.Add (new SqlParameter (key.key, key.value));
+								else
+								{
+									SqlDbType	dbType	= (SqlDbType)key.metadata;
+
+									if ((dbType == SqlDbType.Structured) && (key.stuctureTypeName != null))
+										command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata) { Value	= key.value, TypeName = key.stuctureTypeName.ToString () });
+									else
+										command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata) { Value	= key.value });
+								}
+							}
+
+					
+					// Add ReturnValue Paramter
+					command.Parameters.Add (new SqlParameter () {
+						DbType			= DbType.Object,
+						Direction		= ParameterDirection.ReturnValue,
+						ParameterName	= C_RET_VALUE
+					});
 				#endregion
 
 				#region Open Connection
@@ -94,23 +118,48 @@ namespace DAL
 					{
 						default:
 						case EnumExecuteType.nonQuery :
+							command.CommandType = CommandType.Text;
 							result.model	= command.ExecuteNonQuery ();
 							break;
 
 						case EnumExecuteType.scaler :
+							command.CommandType = CommandType.Text;
 							result.model	= command.ExecuteScalar ();
 							break;
 							
 						case EnumExecuteType.reader :
+							command.CommandType = CommandType.Text;
 							result.model	= readerToTable (command.ExecuteReader ());
 							break;
 
 						case EnumExecuteType.xmlReader :
+							command.CommandType = CommandType.Text;
 							result.model	= command.ExecuteXmlReader ();
+							break;
+
+						case EnumExecuteType.procedureReader :
+							command.CommandType = CommandType.StoredProcedure;
+							result.model	= command.ExecuteReader ();
+							break;
+
+						case EnumExecuteType.procedureNonQuery :
+							command.CommandType = CommandType.StoredProcedure;
+							result.model	= command.ExecuteNonQuery ();
 							break;
 					}
 
+					// create result
+					result.extra	= command.Parameters[C_RET_VALUE].Value;
+					if (result.extra is DBNull)
+						result.extra	= null;
 					result.status	= EnumCommandStatus.success;
+					if (result.model is SqlDataReader)
+					{
+						DataTable	dt	= new DataTable ();
+						
+						dt.Load ((SqlDataReader)result.model);
+						result.model	= dt;
+					}
 				#endregion
 				}
 				catch (Exception ex)
@@ -151,5 +200,6 @@ namespace DAL
 
 			return result;
 		}
+	#endregion
 	}
 }

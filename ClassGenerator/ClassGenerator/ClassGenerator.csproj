@@ -61,7 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DefaultDataTemplate.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Helper\Extensions.cs" />
+    <Compile Include="Models\ForeignKeyModel.cs" />
     <Compile Include="Resources\Class.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,6 +100,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Field.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Field.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Table.resx">
@@ -142,9 +143,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\DAL\DAL.csproj">
+    <ProjectReference Include="..\..\BLL\BaseBLL.csproj">
+      <Project>{bfb66a9b-4fb4-48f1-a888-d82c5d56be81}</Project>
+      <Name>BaseBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DAL\BaseDAL.csproj">
       <Project>{8950760d-5a59-43ca-b663-851a40954f20}</Project>
-      <Name>DAL</Name>
+      <Name>BaseDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

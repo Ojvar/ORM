@@ -46,6 +46,7 @@ namespace ClassGenerator.Classes
 		REFERENCED_ORDINAL_POSITION,
 		UPDATE_RULE,
 		DELETE_RULE,
-		CSharpDataType
+		CSharpDataType,
+		REFERENCE_CONN_TYPE
 	}
 }

@@ -44,7 +44,8 @@ namespace ClassGenerator.Classes
 			sqlDbType[typeof (DateTime)]			= SqlDbType.DateTime;
 			sqlDbType[typeof (DateTimeOffset)]		= SqlDbType.DateTimeOffset;
 			sqlDbType[typeof (byte[])]				= SqlDbType.Binary;
-			sqlDbType[typeof (byte?)]				= SqlDbType.TinyInt;
+            sqlDbType[typeof(byte[])]               = SqlDbType.VarBinary;
+            sqlDbType[typeof (byte?)]				= SqlDbType.TinyInt;
 			sqlDbType[typeof (sbyte?)]				= SqlDbType.TinyInt;
 			sqlDbType[typeof (short?)]				= SqlDbType.SmallInt;
 			sqlDbType[typeof (ushort?)]				= SqlDbType.SmallInt;
@@ -77,8 +78,8 @@ namespace ClassGenerator.Classes
 			csType[SqlDbType.NText]				= typeof (string);			
 			csType[SqlDbType.VarChar]			= typeof (string);			
 			csType[SqlDbType.NVarChar]			= typeof (string);			
-			csType[SqlDbType.Char]				= typeof (char);			
-			csType[SqlDbType.NChar]				= typeof (char);			
+			csType[SqlDbType.Char]				= typeof (string);			
+			csType[SqlDbType.NChar]				= typeof (string);			
 			csType[SqlDbType.UniqueIdentifier]	= typeof (Guid);			
 			csType[SqlDbType.Date]				= typeof (DateTime);		
 			csType[SqlDbType.Time]				= typeof (TimeSpan);		
@@ -86,10 +87,12 @@ namespace ClassGenerator.Classes
 			csType[SqlDbType.DateTime2]			= typeof (DateTime);		
 			csType[SqlDbType.DateTimeOffset]	= typeof (DateTimeOffset);
 			csType[SqlDbType.Binary]			= typeof (byte[]);
-			csType[SqlDbType.Timestamp]			= typeof (byte[]);
+            csType[SqlDbType.VarBinary]         = typeof(byte[]);
+            csType[SqlDbType.Timestamp]			= typeof (byte[]);
 			csType[SqlDbType.Money]				= typeof (decimal);
-		#endregion
-		}
+			csType[SqlDbType.Image]				= typeof (byte[]);
+            #endregion
+        }
 	#endregion
 	}
 }

@@ -1,0 +1,7 @@
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\bin\Debug\BaseBLL.dll
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\bin\Debug\BaseBLL.pdb
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\bin\Debug\BaseDAL.dll
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\bin\Debug\BaseDAL.pdb
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\obj\Debug\BaseBLL.dll
+D:\Source\Codes\CommercialWorks\ojvar-orm\BLL\obj\Debug\BaseBLL.pdb

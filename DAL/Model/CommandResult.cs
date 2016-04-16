@@ -1,11 +1,11 @@
-﻿using DAL.Base;
+﻿using BaseDAL.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DAL.Model
+namespace BaseDAL.Model
 {
 	/// <summary>
 	/// Command result
@@ -39,7 +39,7 @@ namespace DAL.Model
 			get;
 			set;
 		} 
-
+		
 		/// <summary>
 		/// Extra data
 		/// </summary>
@@ -48,7 +48,16 @@ namespace DAL.Model
 			get;
 			set;
 		}
-		#endregion
+
+		/// <summary>
+		/// Message/Error Number
+		/// </summary>
+		public int id
+		{
+			get;
+			set;
+		}
+	#endregion
 
 	#region Methods
 		/// <summary>

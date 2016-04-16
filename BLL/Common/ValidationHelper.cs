@@ -1,8 +1,10 @@
-﻿using BLL.Base;
+﻿using BaseBLL.Base;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using BaseBLL;
 
-namespace BLL.Common
+namespace BaseBLL.Common
 {
 	/// <summary>
 	/// Validation Helper
@@ -21,7 +23,7 @@ namespace BLL.Common
 		/// <param name="value"></param>
 		/// <param name="attr"></param>
 		/// <returns></returns>
-		public static ValidationResult validateField (string fieldName, object value, FieldAttribute attr, string validationFieldName = C_FIELD_NAME)
+		public static ValidationResult validateField (PropertyInfo prop, object value)
 		{
 			ValidationResult result = new ValidationResult ();
 
@@ -29,35 +31,32 @@ namespace BLL.Common
 			result.isValid = true;
 			result.message = new List<string> ();
 
-			if (null != attr)
+			if (null != prop)
 			{
 				// Get Property info
-				PropertyInfo pInfo = attr.GetType ().GetProperty (validationFieldName, BindingFlags.Public | BindingFlags.Instance);
+				object[]		attrs	= prop.GetCustomAttributes (typeof (FieldAttribute), true);
 
-				if (null != pInfo)
+				foreach (FieldAttribute attr in attrs)
 				{
-					List<ValidationResult> vItems = new List<ValidationResult> ();
-					object fieldValue = null;
-
-					// Get value
-					fieldValue = pInfo.GetValue (attr, null);
-
-					if (null != fieldValue)
+					object	nullable	= attr.GetType ().GetProperty ("nullable", BindingFlags.Public | BindingFlags.Instance).GetValue (attr, null);
+					object	size		= attr.GetType ().GetProperty ("size", BindingFlags.Public | BindingFlags.Instance).GetValue (attr, null);
+					
+					if (nullable is bool)
 					{
-						string[] valueOptions = fieldValue.ToString ().ToLower ().Split (',');
+						bool isNull	= Convert.ToBoolean (nullable);
 
-						if (valueOptions != null)
-							foreach (string val in valueOptions)
-							{
-								ValidationResult vRes = ValidationItem.validate (fieldName, value, val);
-
-								if ((null != vRes) && (null != vRes.message) && (0 < vRes.message.Count))
-									result.message.AddRange (vRes.message);
-							}
-
-						result.isValid = (result.message.Count == 0);
+						if (!isNull && (value == null))
+							result.message.Add(string.Format("{0} value can't be null", prop.Name));
 					}
+
+					decimal	fieldSize;
+
+					if (Decimal.TryParse (size.ToString (), out fieldSize))
+						if ((fieldSize > 0) && (value != null) && (value.ToString().Length > fieldSize))
+							result.message.Add(string.Format("{0} size error, maximum length is {1}", prop.Name, fieldSize));
 				}
+
+				result.isValid	= (result.message.Count == 0);
 			}
 
 			return result;

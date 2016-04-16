@@ -1,16 +1,16 @@
-﻿using BLL.Base;
-using BLL.Common;
-using BLL.Interface;
-using DAL.Base;
-using DAL.Model;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using BaseBLL.Base;
+using BaseBLL.Common;
+using BaseBLL.Interface;
+using BaseDAL.Base;
+using BaseDAL.Model;
 
-namespace BLL.Logic
+namespace BaseBLL.Logic
 {
 	/// <summary>
 	/// Base Logic
@@ -18,7 +18,22 @@ namespace BLL.Logic
 	public class Base<T> : IBase where T : new()
 	{
 	#region Variables
+		public static string	C_TOTAL_ROWS {
+			get
+			{
+				return "__totalRows";
+			}
+		}
+		public static string	C_ROW_NUMBER
+		{
+			get
+			{
+				return "__rowNumber";
+			}
+		}
+
 		protected SqlConnection	connection	= null;
+		protected string		connectionType;
 	#endregion
 
 	#region Constructor
@@ -26,10 +41,13 @@ namespace BLL.Logic
 		/// Constructor
 		/// </summary>
 		/// <param name="type"></param>
-		public Base (DAL.Base.EnumConnectionType type)
+		public Base (string type)
 		{
+			// Save Connection type
+			connectionType	= type;
+
 			// Create SqlConnection
-			this.connection	= DAL.Base.Connection.generateConnection (type);
+			this.connection	= BaseDAL.Base.Connection.generateConnection (type);
 		}
 	#endregion
 
@@ -77,13 +95,26 @@ namespace BLL.Logic
 						fieldName			+= ",[" + info.Name + "]";
 						fieldValueString	+= ",@" + info.Name;
 
-						fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
+						// Get DB type
+						SqlDbType	dbType;
+						string		sDbType;
+
+						// Get SqlDBType
+						sDbType	= getAttrField (info, "sqlDBType").ToString ();
+						if (!sDbType.isNullOrEmptyOrWhiteSpaces ())
+						{
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), sDbType);
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+						}
+						// NO DBTypeFound
+						else
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
 					}
 
-					if (!string.IsNullOrWhiteSpace (fieldName))
+					if (!fieldName.isNullOrEmptyOrWhiteSpaces ())
 						fieldName = fieldName.Remove (0, 1);
 
-					if (!string.IsNullOrWhiteSpace (fieldValueString))
+					if (!fieldValueString.isNullOrEmptyOrWhiteSpaces ())
 						fieldValueString = fieldValueString.Remove (0, 1);
 				#endregion
 
@@ -94,7 +125,7 @@ namespace BLL.Logic
 						command	= string.Format (command, tableName, fieldName, fieldValueString);
 
 						// Run Command
-						result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
 
 					#region Read new Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -112,7 +143,7 @@ namespace BLL.Logic
 			}
 			else
 			{
-				result.status	= DAL.Base.EnumCommandStatus.executeFailed;
+				result.status	= BaseDAL.Base.EnumCommandStatus.executeFailed;
 				result.message	= "Error: NULL Data";
 			}
 
@@ -124,7 +155,7 @@ namespace BLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult udpate (object iData, bool closeConnection = true)
+		public virtual CommandResult update (object iData, bool closeConnection = true)
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -158,10 +189,15 @@ namespace BLL.Logic
 
 						// Make Update string
 						updateStr	+= string.Format (",[{0}] = @{0}", info.Name);
-						fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
+
+						// Get DB type
+						SqlDbType	dbType;
+
+						dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+						fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
 					}
 
-					if (!string.IsNullOrWhiteSpace (updateStr))
+					if (!updateStr.isNullOrEmptyOrWhiteSpaces ())
 						updateStr = updateStr.Remove (0, 1);
 				#endregion
 
@@ -178,10 +214,15 @@ namespace BLL.Logic
 
 							// Make Update string
 							updateCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
+
+							// Get DB type
+							SqlDbType	dbType;
+
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
 						}
 
-						if (!string.IsNullOrWhiteSpace (updateCriteria))
+						if (!updateCriteria.isNullOrEmptyOrWhiteSpaces ())
 							updateCriteria = " WHERE " + updateCriteria.Remove (0, 3);
 					}
 				#endregion
@@ -193,7 +234,7 @@ namespace BLL.Logic
 						command	= string.Format (command, tableName, updateStr, updateCriteria);
 
 						// Run Command
-						result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -211,7 +252,7 @@ namespace BLL.Logic
 			}
 			else
 			{
-				result.status	= DAL.Base.EnumCommandStatus.executeFailed;
+				result.status	= BaseDAL.Base.EnumCommandStatus.executeFailed;
 				result.message	= "Error: NULL Data";
 			}
 
@@ -256,10 +297,15 @@ namespace BLL.Logic
 
 							// Make Update string
 							deleteCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
+							
+							// Get DB type
+							SqlDbType	dbType;
+
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
 						}
 
-						if (!string.IsNullOrWhiteSpace (deleteCriteria))
+						if (!deleteCriteria.isNullOrEmptyOrWhiteSpaces ())
 							deleteCriteria = " WHERE " + deleteCriteria.Remove (0, 3);
 					}
 				#endregion
@@ -271,14 +317,14 @@ namespace BLL.Logic
 						command	= string.Format (command, tableName, deleteCriteria);
 
 						// Run Command
-						result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, closeConnection, fieldValue.ToArray ());
 					}
 				#endregion
 				}
 			}
 			else
 			{
-				result.status	= DAL.Base.EnumCommandStatus.executeFailed;
+				result.status	= BaseDAL.Base.EnumCommandStatus.executeFailed;
 				result.message	= "Error: NULL Data";
 			}
 
@@ -319,7 +365,7 @@ namespace BLL.Logic
 						// Make Update string
 						readStr	+= string.Format (",[{0}]", info.Name);
 
-					if (!string.IsNullOrWhiteSpace (readStr))
+					if (!readStr.isNullOrEmptyOrWhiteSpaces ())
 						readStr = readStr.Remove (0, 1);
 				#endregion
 
@@ -336,10 +382,15 @@ namespace BLL.Logic
 
 							// Make Update string
 							readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
+							
+							// Get DB type
+							SqlDbType	dbType;
+
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
 						}
 
-						if (!string.IsNullOrWhiteSpace (readCriteria))
+						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
 							readCriteria = " WHERE " + readCriteria.Remove (0, 3);
 					}
 				#endregion
@@ -351,7 +402,7 @@ namespace BLL.Logic
 						command	= string.Format (command, tableName, readStr, readCriteria);
 
 						// Run Command
-						result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -361,6 +412,8 @@ namespace BLL.Logic
 							// update data
 							if ((dt != null) && (dt.Rows.Count > 0))
 								parseInline (data, dt.Rows[0]);
+
+							result.model	= data;
 						}
 					#endregion
 					}
@@ -369,7 +422,104 @@ namespace BLL.Logic
 			}
 			else
 			{
-				result.status	= DAL.Base.EnumCommandStatus.executeFailed;
+				result.status	= BaseDAL.Base.EnumCommandStatus.executeFailed;
+				result.message	= "Error: NULL Data";
+			}
+
+			return result;
+		}
+		
+		/// <summary>
+		/// Read Command
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		public virtual CommandResult read (object data, string field, bool closeConnection = true)
+		{
+			CommandResult	result	= new CommandResult ();
+
+			if (null != data)
+			{
+				string	command			= "";
+				string	readStr			= "";
+				string	readCriteria	= "";
+				string	tableName		= "";
+
+				PropertyInfo[]		properties	= null;
+				List<KeyValuePair>	fieldValue	= new List<KeyValuePair> ();
+
+			#region Set Command String
+				tableName	= this.GetType ().Name.Replace ("__", ".");
+				command	= "SELECT {1} FROM [{0}] {2}";
+			#endregion
+
+				// Filter Properties by Usage
+				properties	= filterProperties (data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance), EnumUsage.read);
+
+				if (null != properties)
+				{
+				#region Prepare Read command parameters
+					foreach (PropertyInfo info in properties)
+						// Make Update string
+						readStr	+= string.Format (",[{0}]", info.Name);
+
+					if (!readStr.isNullOrEmptyOrWhiteSpaces ())
+						readStr = readStr.Remove (0, 1);
+				#endregion
+
+				#region Create Criteria Command
+					if (null != properties)
+					{
+						PropertyInfo	info	= data.GetType ().GetProperty (field);
+
+						if (null != info)
+						{
+							// Get value
+							object	infoData	= info.GetValue (data, null);
+
+							// Make Update string
+							readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+							
+							// Get DB type
+							SqlDbType	dbType;
+
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+						}
+
+						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
+							readCriteria = " WHERE " + readCriteria.Remove (0, 3);
+					}
+				#endregion
+
+				#region Run Command
+					if (null != connection)
+					{
+						// Setup command string
+						command	= string.Format (command, tableName, readStr, readCriteria);
+
+						// Run Command
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+
+					#region Read updated Record data & save into "data"
+						if (result.status == EnumCommandStatus.success)
+						{
+							DataTable	dt	= result.model as DataTable;
+
+							// update data
+							if ((dt != null) && (dt.Rows.Count > 0))
+								parseInline (data, dt.Rows[0]);
+
+							result.model	= dt;
+						}
+					#endregion
+					}
+				#endregion
+				}
+			}
+			else
+			{
+				result.status	= BaseDAL.Base.EnumCommandStatus.executeFailed;
 				result.message	= "Error: NULL Data";
 			}
 
@@ -386,31 +536,143 @@ namespace BLL.Logic
 		/// <param name="criteria"></param>
 		/// <param name="outputAsList"></param>
 		/// <returns></returns>
-		public virtual CommandResult allByPaging (string viewName, int pageIndex = 1, int pageSize = 100, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true)
+		public virtual CommandResult allByPaging (int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues)
+		{
+			CommandResult result = null;
+            string tableName = this.GetType().Name;
+
+            result = allByViewNameByPaging(tableName, pageIndex, pageSize, criteria, orderBy, outputAsList, closeConnection, fieldValues);
+
+            return result;
+		}
+
+        /// <summary>
+		/// Read by viewname by Paging
+		/// </summary>
+		/// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+		/// <param name="pageSize"></param>
+		/// <param name="criteria"></param>
+		/// <param name="outputAsList"></param>
+		/// <returns></returns>
+		public virtual CommandResult allByViewNameByPaging(string viewName, int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues)
+        {
+            CommandResult result = new CommandResult();
+            string command = "";
+            string tableName = "";
+
+        #region Setup parameters
+            tableName = viewName.Replace("__", ".");
+            command = "SELECT TOP 100 PERCENT base.* FROM " +
+                " (SELECT {6}, {5} FROM [{0}] {1}) AS base WHERE ({7} BETWEEN {2} AND {3}) {4}";
+        #endregion
+
+        #region Prepare command
+			pageIndex	= Math.Max (1, pageIndex);
+			pageSize	= Math.Max (1, pageSize);
+
+			int	startRow	= ((pageIndex - 1) * pageSize) + 1;
+			int	endRow		= startRow + (pageSize - 1);
+
+            command = string.Format(command,
+				tableName,
+                (criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"),
+                startRow, 
+				endRow,
+                (orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy),
+                (pageIndex > -1 ? " ROW_NUMBER() OVER (ORDER BY ID) AS " + C_ROW_NUMBER + ", *" : "*"),
+				" COUNT (*) OVER () AS " + C_TOTAL_ROWS, 
+				C_ROW_NUMBER
+                );
+        #endregion
+
+        #region Run Command
+            if (null != connection)
+            {
+                result = BaseDAL.DBaseHelper.executeCommand(EnumExecuteType.reader, connection, command, closeConnection, fieldValues);
+
+            #region Add total rows count & remove this column from result
+                if ((null != result) && (result.status == EnumCommandStatus.success))
+                {
+                    DataTable table = result.model as DataTable;
+
+                    if (null != table)
+                    {
+                        if ((table.Rows.Count > 0) && (table.Columns.Contains (C_TOTAL_ROWS)))
+						{
+							Hashtable extraData;
+							extraData		= new Hashtable ();
+							result.extra	= extraData;
+							extraData.Add (C_TOTAL_ROWS, Convert.ToInt32 (table.Rows[0][C_TOTAL_ROWS]));
+						}
+
+                    #region Remove controll fields
+                        if (table.Columns.IndexOf(C_TOTAL_ROWS) > -1)
+                            table.Columns.Remove(C_TOTAL_ROWS);
+                        if (table.Columns.IndexOf(C_ROW_NUMBER) > -1)
+                            table.Columns.Remove(C_ROW_NUMBER);
+                    #endregion
+
+                    #region Convert to List
+                        if (outputAsList)
+                        {
+                            List<T> resultRows = new List<T>();
+
+                            foreach (DataRow row in table.Rows)
+                                resultRows.Add(parse(row));
+
+                            // Clear Table Model
+                            table.Dispose();
+
+                            // Add List Model
+                            result.model = resultRows;
+                        }
+                    #endregion
+                    }
+                }
+            #endregion
+            }
+            else
+            {
+                result.status = EnumCommandStatus.executeFailed;
+                result.message = "Error: Connection null";
+            }
+        #endregion
+
+            return result;
+        }
+    #endregion
+
+    #region Public - Other methods
+        /// <summary>
+        /// All data
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allDataByViewName (string viewName, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
 			CommandResult	result		= new CommandResult ();
 			string			command		= "";
 			string			tableName	= "";
 
 		#region Setup parameters
-			tableName = viewName;
-			command = "SELECT TOP 100 PERCENT COUNT (*) OVER () AS totalRows, base.* FROM " +
-				" (SELECT {5} FROM [{0}] {1}) AS base WHERE (rowNumber BETWEEN {2} AND {3}) {4}"; 
+			tableName   = viewName.Replace ("__", ".");
+			command     = "SELECT * FROM [{0}] {1} {2}"; 
 		#endregion
 
 		#region Prepare command
 			command	= string.Format (command,  tableName, 
-				(string.IsNullOrWhiteSpace (criteria) ? "" : " WHERE (" + criteria + ")"), 
-				((pageIndex - 1) * pageSize), ((pageIndex - 1) * pageSize) + pageSize,
-				(string.IsNullOrWhiteSpace (orderBy) ? "" : " ORDER BY " + orderBy),
-				(pageIndex > -1 ? " ROW_NUMBER() OVER (ORDER BY ID) AS rowNumber, *" : "*")
+				(criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"), 
+				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy)
 				);
 		#endregion
 
 		#region Run Command
 			if (null != connection)
 			{
-				result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -419,14 +681,19 @@ namespace BLL.Logic
 
 					if (null != table)
 					{
-						result.extra	= new Hashtable ();
-						result.extra.Add ("TotalRows", (table.Rows.Count > 0 ? 0 : Convert.ToInt32 (table.Rows[0]["totalRows"])));
+						if ((table.Rows.Count > 0) && (table.Columns.Contains (C_TOTAL_ROWS)))
+						{
+							Hashtable extraData;
+							extraData		= new Hashtable ();
+							result.extra	= extraData;
+							extraData.Add (C_TOTAL_ROWS, Convert.ToInt32 (table.Rows[0][C_TOTAL_ROWS]));
+						}
 
 					#region Remove controll fields
-						if (table.Columns.IndexOf ("totalRows") > -1)
-							table.Columns.Remove ("totalRows");
-						if (table.Columns.IndexOf ("rowNumber") > -1)
-							table.Columns.Remove ("rowNumber");
+						if (table.Columns.IndexOf (C_TOTAL_ROWS) > -1)
+							table.Columns.Remove (C_TOTAL_ROWS);
+						if (table.Columns.IndexOf (C_ROW_NUMBER) > -1)
+							table.Columns.Remove (C_ROW_NUMBER);
 					#endregion
 
 					#region Convert to List
@@ -457,63 +724,69 @@ namespace BLL.Logic
 
 			return result;
 		}
-	
-		/// <summary>
-		/// Read by Paging
-		/// </summary>
-		/// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
-		/// <param name="pageSize"></param>
-		/// <param name="criteria"></param>
-		/// <param name="outputAsList"></param>
-		/// <returns></returns>
-		public virtual CommandResult allByPaging (int pageIndex = 1, int pageSize = 100, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true)
+
+        /// <summary>
+        /// All data
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allData (string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
-			CommandResult	result;
-			string			viewName;
+            CommandResult   result    = null;
+			string          tableName = this.GetType ().Name.Replace ("__", ".");
 
-			// Prepare
-			result		= new CommandResult ();
-			viewName	= this.GetType ().Name.Replace ("__", ".");
+            result = allDataByViewName(tableName, criteria, orderBy, outputAsList, closeConnection, fieldValue);
 
-			// Run Query
-			result	= allByPaging (viewName, pageIndex, pageSize, criteria, orderBy, outputAsList);
-
-			// Return result
 			return result;
 		}
-	#endregion
 
-	#region Public - Other methods
-		/// <summary>
-		/// All data
-		/// </summary>
-		/// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
-		/// <param name="pageSize"></param>
-		/// <param name="criteria"></param>
-		/// <param name="outputAsList"></param>
-		/// <returns></returns>
-		public virtual CommandResult allData (string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		
+        /// <summary>
+        /// All data
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allDataBySpecifiedFields (string[] fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
 			CommandResult	result		= new CommandResult ();
 			string			command		= "";
 			string			tableName	= "";
+			
+		#region Validation
+			if ((null == fields) || (fields.Length == 0))
+			{
+				result.status	= EnumCommandStatus.operationFailed;
+				result.message	= "Field(s) data can't be null or empty!";
+				result.id		= 1;
+
+				// Return
+				return result;
+			}
+		#endregion
 
 		#region Setup parameters
-			tableName = this.GetType ().Name.Replace ("__", ".");
-			command = "SELECT * FROM [{0}] {1} {2}"; 
+			tableName   = GetType ().Name.Replace ("__", ".");
+			command     = "SELECT {3} FROM [{0}] {1} {2}"; 
 		#endregion
 
 		#region Prepare command
 			command	= string.Format (command,  tableName, 
-				(string.IsNullOrWhiteSpace (criteria) ? "" : " WHERE (" + criteria + ")"), 
-				(string.IsNullOrWhiteSpace (orderBy) ? "" : " ORDER BY " + orderBy)
+				(criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"), 
+				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy),
+				string.Join (",", fields)
 				);
 		#endregion
 
 		#region Run Command
 			if (null != connection)
 			{
-				result	= DAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -522,17 +795,19 @@ namespace BLL.Logic
 
 					if (null != table)
 					{
-						if (table.Rows.Count > 0)
+						if ((table.Rows.Count > 0) && (table.Columns.Contains (C_TOTAL_ROWS)))
 						{
-							result.extra	= new Hashtable ();
-							result.extra.Add ("TotalRows", (table.Rows.Count > 0 ? 0 : Convert.ToInt32 (table.Rows[0]["totalRows"])));
+							Hashtable extraData;
+							extraData		= new Hashtable ();
+							result.extra	= extraData;
+							extraData.Add (C_TOTAL_ROWS, Convert.ToInt32 (table.Rows[0][C_TOTAL_ROWS]));
 						}
 
 					#region Remove controll fields
-						if (table.Columns.IndexOf ("totalRows") > -1)
-							table.Columns.Remove ("totalRows");
-						if (table.Columns.IndexOf ("rowNumber") > -1)
-							table.Columns.Remove ("rowNumber");
+						if (table.Columns.IndexOf (C_TOTAL_ROWS) > -1)
+							table.Columns.Remove (C_TOTAL_ROWS);
+						if (table.Columns.IndexOf (C_ROW_NUMBER) > -1)
+							table.Columns.Remove (C_ROW_NUMBER);
 					#endregion
 
 					#region Convert to List
@@ -580,34 +855,33 @@ namespace BLL.Logic
 				// Get Properties
 				PropertyInfo[]	properties	= data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance);
 
-				result.status	= EnumCommandStatus.success;
-				result.message	= "Success";
+			#region Default
+				result.id = 0;
+				result.status = EnumCommandStatus.success;
+				result.message = "Success"; 
+			#endregion
 
 				if (null != properties)
 				{
-					bool isValid	= true;
-					result.model	= new List<string> ();
-
+					bool			isValid	= true;
+					List<string>	valResult	= new List<string> ();
+					
+					// Validate fields
 					foreach (PropertyInfo info in properties)
 					{
-						object[] fieldAttr	= info.GetCustomAttributes (typeof (FieldAttribute), true);
+						ValidationResult	res	= ValidationHelper.validateField (info, info.GetValue (data, null));
 
-						if (null != fieldAttr)
-						{
-							foreach (FieldAttribute attr in fieldAttr)
-							{
-								ValidationResult	res	= ValidationHelper.validateField (info.Name, info.GetValue (data, null), attr);
-
-								if ((res != null) && (res.message != null) && (res.message.Count > 0))
-									((List<string>)result.model).AddRange (res.message);
-
-								isValid	= isValid && (res.message.Count == 0);
-							}
-						}
+						if ((res != null) && (res.message != null) && (res.message.Count > 0))
+							valResult.AddRange (res.message);
 					}
+
+					// Set output message
+					isValid	= (valResult.Count == 0);
+					result.model	= valResult;
 
 					if (!isValid)
 					{
+						result.id		= 2;
 						result.message	= "Error";
 						result.status	= EnumCommandStatus.operationFailed;
 					}
@@ -615,6 +889,7 @@ namespace BLL.Logic
 			}
 			else
 			{
+				result.id		= 1;
 				result.status	= EnumCommandStatus.operationFailed;
 				result.message	= "Error :NULL data";
 			}
@@ -664,6 +939,34 @@ namespace BLL.Logic
 
 	#region Class Methods
 		/// <summary>
+		/// Copy model
+		/// </summary>
+		/// <param name="mode"></param>
+		public void copyTo (ref object model)
+		{
+			if ((null != model) && (model is T))
+			{
+				PropertyInfo	sourceInfo;
+				PropertyInfo[]	targetProp;
+				T				tModel;
+
+				// Init
+				tModel	= (T)model;
+				targetProp	= tModel.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance);
+
+				// Try to copy
+				foreach (PropertyInfo destInfo in targetProp)
+				{
+					// Init
+					sourceInfo	= this.GetType ().GetProperty (destInfo.Name);
+
+					// try to copy
+					destInfo.SetValue (tModel, sourceInfo.GetValue (this, null), null);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Parse datarow
 		/// </summary>
 		/// <param name="row"></param>
@@ -677,9 +980,16 @@ namespace BLL.Logic
 				DataTable		table	= row.Table;
 				PropertyInfo[]	info	= result.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance);
 
-				foreach (PropertyInfo inf in info)
-					if (table.Columns.IndexOf (inf.Name) > -1)
-						inf.SetValue (result, (row[inf.Name].GetType () == typeof (DBNull) ? null : row[inf.Name]), null);
+				try
+				{
+					foreach (PropertyInfo inf in info)
+						if (table.Columns.IndexOf (inf.Name) > -1)
+							inf.SetValue (result, (row[inf.Name].GetType () == typeof (DBNull) ? null : row[inf.Name]), null);
+				}
+				catch (Exception ex)
+				{
+					/// TODO: Log Error
+				}
 			}
 
 			return result;
@@ -697,9 +1007,16 @@ namespace BLL.Logic
 				DataTable		table	= row.Table;
 				PropertyInfo[]	info	= data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance);
 
-				foreach (PropertyInfo inf in info)
-					if (table.Columns.IndexOf (inf.Name) > -1)
-						inf.SetValue (data, (row[inf.Name].GetType () == typeof (DBNull) ? null : row[inf.Name]), null);
+				try
+				{
+					foreach (PropertyInfo inf in info)
+						if (table.Columns.IndexOf (inf.Name) > -1)
+							inf.SetValue (data, (row[inf.Name].GetType () == typeof (DBNull) ? null : row[inf.Name]), null);
+				}
+				catch (Exception ex)
+				{
+					/// TODO: Log Error
+				}
 			}
 		}
 
@@ -768,6 +1085,49 @@ namespace BLL.Logic
 				if (result.Length > 0)
 					result	= result.Remove (0, 1);
 			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Get an attribute value
+		/// </summary>
+		/// <param name="attrName"></param>
+		/// <returns></returns>
+		private object getAttrField (PropertyInfo data, string attrName)
+		{
+			object		result;
+			object[]	fieldAttr;
+
+			// Init
+			fieldAttr	= data.GetCustomAttributes (typeof (FieldAttribute), true);
+			result		= null;
+
+			if (null != fieldAttr)
+				foreach (FieldAttribute attr in fieldAttr)
+					result	= attr.GetType ().GetProperty (attrName).GetValue (attr, null);
+
+			return result;
+		}
+		
+
+		/// <summary>
+		/// Convert datatable to list
+		/// </summary>
+		/// <param name="table"></param>
+		/// <returns></returns>
+		public List<T> tableToList (DataTable table)
+		{
+			List<T> result = new List<T> ();
+
+			if (null != table)
+				foreach (DataRow row in table.Rows)
+				{
+					T	entity	= parse (row);
+
+					if (null != entity)
+						result.Add (entity);
+				}
 
 			return result;
 		}

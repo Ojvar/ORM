@@ -62,13 +62,12 @@ namespace ClassGenerator.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
-        ///using BLL.Base;
         ///using System.Data;
-        ///using BaseBLL = BLL;
         ///
         ///namespace {0}.BLL.Entity
         ///{{
-        ///	class {1} : {2}
+        ///	[Serializable]
+        ///	public class {1} : {2}
         ///	{{
         ///		{3}
         ///	}}
@@ -82,14 +81,12 @@ namespace ClassGenerator.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
-        ///using BLL.Base;
-        ///using BaseBLL = BLL;
         ///
         ///namespace {0}.BLL.Logic
         ///{{
-        ///	class {1} : BaseBLL.Logic.Base&lt;BLL.Entity.{2}&gt;
+        ///	public class {1} : BaseBLL.Logic.Base&lt;BLL.Entity.{2}&gt;
         ///	{{
-        ///		public {1} (DAL.Base.EnumConnectionType type) : base (type)
+        ///		public {1} (string type) : base (type)
         ///		{{
         ///		}}
         ///	}}

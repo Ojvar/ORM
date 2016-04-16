@@ -1,4 +1,4 @@
-﻿using DAL.Model;
+﻿using BaseDAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -99,7 +99,7 @@ namespace ClassGenerator.Classes
 			else
 			{
 				// Server ready?
-				if (!DAL.DBaseHelper.IsServerConnected (connection))
+				if (!BaseDAL.DBaseHelper.IsServerConnected (connection))
 					result.status	= MethodResult.Result.failed;
 				else
 				{
@@ -113,9 +113,9 @@ namespace ClassGenerator.Classes
 					string	cmd	= string.Format (Resources.Database.GetTables, getName ());
 
 					// Run
-					CommandResult	dRes	= DAL.DBaseHelper.executeCommand (DAL.Base.EnumExecuteType.reader, connection, cmd, true);
+					CommandResult	dRes	= BaseDAL.DBaseHelper.executeCommand (BaseDAL.Base.EnumExecuteType.reader, connection, cmd, true);
 
-					if (dRes.status == DAL.Base.EnumCommandStatus.success)
+					if (dRes.status == BaseDAL.Base.EnumCommandStatus.success)
 					{
 						if (dRes.model is DataTable)
 						{

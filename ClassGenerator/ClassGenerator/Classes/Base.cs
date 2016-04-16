@@ -93,6 +93,6 @@ namespace ClassGenerator.Classes
 		{
 			return string.Format ("{0} : {1}", getType (), getName ());
 		}
-		#endregion
+	#endregion
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace BLL.Base
+namespace BaseBLL.Base
 {
 	/// <summary>
 	/// Field Attributes
@@ -92,7 +92,7 @@ namespace BLL.Base
 		/// <summary>
 		/// Foreign Logic Connection
 		/// </summary>
-		public DAL.Base.EnumConnectionType	foreignLogicConnection
+		public string foreignLogicConnection
 		{
 			get;
 			set;

@@ -1,7 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
-namespace DAL.Base
+namespace BaseDAL.Base
 {
 	/// <summary>
 	/// Connection Class
@@ -9,16 +10,20 @@ namespace DAL.Base
 	public static class Connection
 	{
 	#region Properties
-		/// <summary>
-		/// Base String
-		/// </summary>
-		private static string	baseString	= "";
+        /// <summary>
+        /// Sql datasource
+        /// </summary>
+        public static System.Collections.Generic.Dictionary<string, Model.ConnectionModel> dataSources
+        {
+            get;
+            set;
+        }
 	#endregion
 
 	#region Constructor
 		static Connection ()
 		{
-			baseString	= "Data source={0}; Initial Catalog={1}; User Id={2}; Password={3};";
+            dataSources = new System.Collections.Generic.Dictionary<string, Model.ConnectionModel>();
 		}
 	#endregion
 
@@ -28,31 +33,12 @@ namespace DAL.Base
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static SqlConnection generateConnection (Base.EnumConnectionType type, string otherParam = "")
+		public static SqlConnection generateConnection (string type, string otherParam = "")
 		{
-		#region Variables
 			SqlConnection result = null;
-			string userName = "";
-			string password = "";
-			string database = "";
-			string dataSource = ""; 
-		#endregion
 
-		#region Select database Parameters
-			switch (type)
-			{
-				case EnumConnectionType.Database1:
-					userName	= "sa";
-					password	= "1365";
-					database	= "amlak";
-					dataSource	= ".";
-					break;
-			}
-		#endregion
-
-		#region Create Connection
-			result	= new SqlConnection (string.Format (baseString + otherParam, dataSource, database, userName, password));
-		#endregion
+			if ((dataSources != null) && (dataSources.ContainsKey (type)))
+				result	= new SqlConnection (dataSources[type].connectionString);
 
 			return result;
 		} 

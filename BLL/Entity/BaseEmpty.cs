@@ -1,11 +1,13 @@
-﻿using BLL.Base;
+﻿using BaseBLL.Base;
+using System;
 
-namespace BLL.Entity
+namespace BaseBLL.Entity
 {
 	/// <summary>
 	/// Base Entity
 	/// </summary>
-	public class BaseEmpty
+	[Serializable]
+	public class BaseEmpty : BaseModel
 	{
 	}
 }

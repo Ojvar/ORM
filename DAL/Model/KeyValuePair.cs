@@ -1,11 +1,11 @@
-﻿using DAL.Base;
+﻿using BaseDAL.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DAL.Model
+namespace BaseDAL.Model
 {
 	/// <summary>
 	/// Command result
@@ -39,7 +39,16 @@ namespace DAL.Model
 			get;
 			set;
 		}
-		#endregion
+
+		/// <summary>
+		/// Structure type name
+		/// </summary>
+		public string stuctureTypeName
+		{
+			get;
+			set;
+		}
+	#endregion
 
 	#region Constructor
 		/// <summary>
@@ -60,6 +69,17 @@ namespace DAL.Model
 		/// </summary>
 		public KeyValuePair ()
 		{
+		}
+	#endregion
+
+	#region Methods
+		/// <summary>
+		/// To String
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return this.key;
 		}
 	#endregion
 	}

@@ -1,4 +1,4 @@
-﻿namespace BLL.Base
+﻿namespace BaseBLL.Base
 {
 	/// <summary>
 	/// Field Usage Enum

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace BLL.General
+namespace BaseBLL.General
 {
 	/// <summary>
 	/// Form Model Helper

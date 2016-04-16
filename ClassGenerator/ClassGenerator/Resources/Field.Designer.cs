@@ -70,7 +70,78 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}
+        ///   Looks up a localized string similar to 
+        ///	//
+        ///	// Genereted Property of {3}
+        ///	//
+        ///	#region Referenced Property - {2}
+        ///		BLL.Entity.{0}{7} _{2}_{3};
+        ///		public BLL.Entity.{0}{7} {2}_{3}
+        ///		{{
+        ///			get
+        ///			{{
+        ///				if ((null == _{2}_{3}) &amp;&amp; (AutoLoadForeignKeys))
+        ///					load_{2}_{3} ();
+        ///				return _{2}_{3};
+        ///			}}
+        ///			set
+        ///			{{
+        ///				_{2}_{3}	= value;
+        ///			}}
+        ///		}}
+        ///
+        ///		public void load_{2}_{3} ()
+        ///		{{ 
+        ///			BLL.Entity.{0}	entity;
+        ///			BLL.Logic.{1}	logic;
+        ///
+        ///			entity	= new {0} () {{ {5} = {3} }};
+        ///			logic	= new BLL.Logic.{1} (&quot;{6}&quot;);
+        ///			logic.read  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FieldForeignKey {
+            get {
+                return ResourceManager.GetString("FieldForeignKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to //
+        ///	// Genereted Property of {3}
+        ///	//
+        ///	#region Referenced Property - {2}
+        ///		BLL.Entity.{0}{7} _{2}_{3};
+        ///		public BLL.Entity.{0}{7} {2}_{3}
+        ///		{{
+        ///			get
+        ///			{{
+        ///				if ((null == _{2}_{3}) &amp;&amp; ({3}.HasValue) &amp;&amp; (AutoLoadForeignKeys))
+        ///					load_{2}_{3} ();
+        ///				return _{2}_{3};
+        ///			}}
+        ///			set
+        ///			{{
+        ///				_{2}_{3}	= value;
+        ///			}}
+        ///		}}
+        ///
+        ///		public void load_{2}_{3} ()
+        ///		{{ 
+        ///			BLL.Entity.{0}	entity;
+        ///			BLL.Logic.{1}	logic;
+        ///
+        ///			entity	= new {0} () {{ {5} = {3}.Value }};
+        ///			logic	= new BLL.Logic.{1} (&quot;{ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FieldForeignKeyNullable {
+            get {
+                return ResourceManager.GetString("FieldForeignKeyNullable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///		{0}
         ///		public {1} {2}
         ///		{{
         ///			get;
@@ -84,8 +155,43 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WITH FK AS
-        ///(
+        ///   Looks up a localized string similar to 
+        ///	//
+        ///	// Genereted Property of {0}
+        ///	//
+        ///	#region Relation - {0} (Has-Many relation)
+        ///		private System.Data.DataTable _get_{0}_{1};
+        ///		public System.Data.DataTable get{0}_{1}
+        ///		{{
+        ///			get
+        ///			{{
+        ///				if ((_get_{0}_{1} == null) &amp;&amp; (AutoLoadForeignKeys))
+        ///					load{0}_{1} ();
+        ///
+        ///				return _get_{0}_{1};
+        ///			}}
+        ///			set
+        ///			{{
+        ///				_get_{0}_{1}	= value;
+        ///			}}
+        ///		}}
+        ///
+        ///		public void load{0}_{1} (int pageIndex = -1, int pageSize = 100)
+        ///		{{
+        ///			CommandResult	opResult;
+        ///
+        ///			BLL.Logic.{0}	logic	= new BLL.Logi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FieldReferentialKey {
+            get {
+                return ResourceManager.GetString("FieldReferentialKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///WITH FK AS
+        ///	(
         ///	SELECT  
         ///			RC.CONSTRAINT_CATALOG
         ///			,RC.CONSTRAINT_SCHEMA 
@@ -98,12 +204,39 @@ namespace ClassGenerator.Resources {
         ///			,KCU2.COLUMN_NAME AS REFERENCED_COLUMN_NAME 
         ///			,KCU2.ORDINAL_POSITION AS REFERENCED_ORDINAL_POSITION 
         ///			,RC.UPDATE_RULE
-        ///			,RC.DELETE_RULE
-        ///	 [rest of string was truncated]&quot;;.
+        ///			,RC.DELETE_RULE [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetInformation {
             get {
                 return ResourceManager.GetString("GetInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///WITH base AS
+        ///(
+        ///	SELECT
+        ///			OBJECT_NAME (FK.referenced_object_id) AS primaryTable,
+        ///			COL_NAME (FK.referenced_object_id, FKC.referenced_column_id) AS primaryColumn,
+        ///			OBJECT_NAME (FK.parent_object_id) AS foreignTable,
+        ///			COL_NAME (FK.parent_object_id, FKC.parent_column_id) AS foreignColumn
+        ///	FROM
+        ///			[{0}].sys.foreign_keys AS FK
+        ///		INNER JOIN [{0}].sys.foreign_key_columns AS FKC ON (FKC.constraint_object_id = FK.object_id)
+        ///)
+        ///
+        ///SELECT
+        ///		*
+        ///FROM
+        ///		base
+        ///WHERE
+        ///		([primaryTable] = &apos;{1}&apos;) AND
+        ///		([pr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GetReferentialInformation {
+            get {
+                return ResourceManager.GetString("GetReferentialInformation", resourceCulture);
             }
         }
     }

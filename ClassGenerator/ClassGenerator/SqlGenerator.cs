@@ -174,7 +174,7 @@ namespace ClassGenerator
 				dataSource, initialCatalog, userId, password);
 
 			// Check Connection
-			bool conn	= DAL.DBaseHelper.IsServerConnected (C_ConnStr);
+			bool conn	= BaseDAL.DBaseHelper.IsServerConnected (C_ConnStr);
 
 			if (conn)
 			{

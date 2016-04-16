@@ -1,4 +1,5 @@
-﻿using DAL.Model;
+﻿using BaseDAL.Model;
+using ClassGenerator.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +24,12 @@ namespace ClassGenerator.Classes
 	#endregion
 
 	#region Properties
+		public List<ForeignKeyModel> referentialColumn
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Get IsPrimary
 		/// </summary>
@@ -129,8 +136,8 @@ namespace ClassGenerator.Classes
 			SqlDbType	dbType;
 
 			dbType	= getFieldDbType ();
+			result	= TypeHelper.csType[dbType];
 
-			result	= TypeHelper.csType[dbType];	
 			return result;
 		}
 
@@ -182,7 +189,7 @@ namespace ClassGenerator.Classes
 		{
 			string result;
 			
-			result	= (getProperty (EnumFieldProperty.REFERENCED_TABLE_NAME) ?? "").ToString ();
+			result	= (getProperty (EnumFieldProperty.REFERENCED_TABLE_NAME) ?? "").ToString ().Replace (".", "__");
 
 			return result;
 		}
@@ -241,7 +248,7 @@ namespace ClassGenerator.Classes
 				dbase	= table.getParent ();
 
 				// Server ready?
-				if (!DAL.DBaseHelper.IsServerConnected (dbase.getConnection ()))
+				if (!BaseDAL.DBaseHelper.IsServerConnected (dbase.getConnection ()))
 					result.status	= MethodResult.Result.failed;
 				else
 				{
@@ -257,9 +264,9 @@ namespace ClassGenerator.Classes
 					cmd	= string.Format (cmd, dbase.getName (), table.getName (), fieldName);
 				
 					// Run
-					CommandResult	dRes	= DAL.DBaseHelper.executeCommand (DAL.Base.EnumExecuteType.reader, dbase.getConnection (), cmd, true);
+					CommandResult	dRes	= BaseDAL.DBaseHelper.executeCommand (BaseDAL.Base.EnumExecuteType.reader, dbase.getConnection (), cmd, true);
 
-					if (dRes.status == DAL.Base.EnumCommandStatus.success)
+					if (dRes.status == BaseDAL.Base.EnumCommandStatus.success)
 					{
 						if (dRes.model is DataTable)
 						{
@@ -268,6 +275,74 @@ namespace ClassGenerator.Classes
 							if (resTable.Rows.Count > 0)
 								foreach (DataColumn col in resTable.Columns)
 									getProperties ().Add (col.ColumnName, resTable.Rows[0][col.ColumnName]);
+						}
+
+						result.status	= MethodResult.Result.success;
+					}
+					else
+						result.status	= MethodResult.Result.failed;
+				}
+			}
+
+			return result;
+		}
+
+
+		/// <summary>
+		/// Load Field Referntial Information
+		/// </summary>
+		public MethodResult loadReferentialInformation ()
+		{
+			MethodResult	result	= new MethodResult ();
+
+			Database	dbase;
+			Table		table		= getParent ();
+			string		fieldName	= getName ();
+
+			if (null != table)
+				dbase	= table.getParent ();
+			else
+				dbase	= null;
+
+			if ((table == null) || (dbase == null))
+			{
+				throw new NullReferenceException ("Table or Database is null");
+				result.status	= MethodResult.Result.failed;
+			}
+			else
+			{
+				dbase	= table.getParent ();
+
+				// Server ready?
+				if (!BaseDAL.DBaseHelper.IsServerConnected (dbase.getConnection ()))
+					result.status	= MethodResult.Result.failed;
+				else
+				{
+					string	cmd	= Resources.Field.GetReferentialInformation;
+					
+					// Clear last information
+					if (null != referentialColumn)
+						referentialColumn.Clear ();
+					else
+						referentialColumn	= new List<ForeignKeyModel> ();
+
+					// Prepare command
+					cmd	= string.Format (cmd, dbase.getName (), table.getName (), fieldName);
+				
+					// Run
+					CommandResult	dRes	= BaseDAL.DBaseHelper.executeCommand (BaseDAL.Base.EnumExecuteType.reader, dbase.getConnection (), cmd, true);
+
+					if (dRes.status == BaseDAL.Base.EnumCommandStatus.success)
+					{
+						if (dRes.model is DataTable)
+						{
+							DataTable	resTable	= dRes.model as DataTable;
+
+							if (resTable.Rows.Count > 0)
+								foreach (DataRow row in resTable.Rows)
+									referentialColumn.Add (
+										new ForeignKeyModel (row["primaryTable"].ToString (), row["primaryColumn"].ToString (), row["foreignTable"].ToString (), row["foreignColumn"].ToString ())
+										);
 						}
 
 						result.status	= MethodResult.Result.success;
@@ -347,14 +422,70 @@ namespace ClassGenerator.Classes
 		#endregion
 
 			// Join array items
-			string	fieldName;
+			string	fieldType;
+			string	cFT;
 
-			fieldName	= getFieldCsType ().FullName;
+			fieldType	= getFieldCsType ().FullName;
+			cFT			= fieldType.ToLower ();
 			if (getFieldNullable ())
-				fieldName	= "Nullable<" + fieldName + ">";
+				if ((cFT != typeof(string).ToString ().ToLower()) &&
+					(cFT != typeof(byte[]).ToString ().ToLower()) &&
+					(cFT != typeof(char).ToString ().ToLower())
+					)
+				fieldType	= "Nullable<" + fieldType + ">";
 
+			// Create field attr and definition
 			fieldAttr	= string.Format (fieldAttr, string.Join (",", attr));
-			result		= string.Format (propertyBody, fieldAttr, fieldName, getFieldName ()); 
+			result		= string.Format (propertyBody, fieldAttr, fieldType, getFieldName ());
+
+		#region Create Foreign key property if need
+			if (getFieldRefereneTable() != "")
+			{
+				string	def;
+				string	refEntityName;
+				string	refLogicName;
+				string	refFieldName;
+				string	refFieldValue;
+				string	refFieldType;
+				string	refForeignKey;
+				string	refConnection;
+				string	refNullSign;
+
+				if (getFieldNullable ())
+					def				= Resources.Field.FieldForeignKeyNullable;
+				else
+					def				= Resources.Field.FieldForeignKey;
+				refEntityName	= getFieldRefereneTable ();						// {0} EntityName
+				refLogicName	= refEntityName;								// {1} LogicName
+				refFieldName	= refEntityName;								// {2} FieldName
+				refFieldValue	= getFieldName ();								// {3} FieldValue - Current Entity Property
+				refFieldType	= getFieldCsType ().ToString ();				// {4} FieldType
+				refForeignKey	= getFieldRefereneField ();						// {5} ForeignKeyField
+				refConnection	= parent.getParent ().getName ();				// {6} Connection
+				refNullSign		= ""; //(getFieldNullable () ? "?" : "");		// {7} IsNUll?
+			
+				// Generate property string
+				def = string.Format(def, refEntityName, refLogicName, refFieldName, refFieldValue, refFieldType, refForeignKey, refConnection, refNullSign);
+
+				//result	+= string.Format ("\r\n{1}", refFieldName, def);
+				result	+= string.Format ("\r\n{0}", def);
+			}
+		#endregion
+
+		#region Create Referential properties if need
+			loadReferentialInformation ();
+
+			if (null != referentialColumn)
+				foreach (Models.ForeignKeyModel key in referentialColumn)
+				{
+					string	def;
+					
+					def	= string.Format (Resources.Field.FieldReferentialKey, key.foreignTable.Replace (".", "__"), key.foreignColumn, key.primaryColumn, parent.getParent ().getName ());
+
+					// Append to result
+					result	+= string.Format ("\r\n{0}", def);
+				}
+		#endregion
 
 			return result;
 		}
