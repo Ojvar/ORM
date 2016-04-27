@@ -33,7 +33,7 @@ namespace BaseBLL.Logic
 		}
 
 		protected SqlConnection	connection	= null;
-		protected string		connectionType;
+		protected string		datasource;
 	#endregion
 
 	#region Constructor
@@ -41,13 +41,16 @@ namespace BaseBLL.Logic
 		/// Constructor
 		/// </summary>
 		/// <param name="type"></param>
-		public Base (string type)
+		public Base (object dataSource)
 		{
 			// Save Connection type
-			connectionType	= type;
+			if (null == datasource)
+				throw new NullReferenceException ();
+
+			this.datasource	= dataSource.ToString ();
 
 			// Create SqlConnection
-			this.connection	= BaseDAL.Base.Connection.generateConnection (type);
+			this.connection	= BaseDAL.Base.Connection.generateConnection (this.datasource);
 		}
 	#endregion
 
@@ -470,21 +473,26 @@ namespace BaseBLL.Logic
 				#region Create Criteria Command
 					if (null != properties)
 					{
-						PropertyInfo	info	= data.GetType ().GetProperty (field);
+						string[]	fields	= field.Split (new string[] {",", ";", ""}, StringSplitOptions.RemoveEmptyEntries);
 
-						if (null != info)
+						foreach (string fieldItem in fields)
 						{
-							// Get value
-							object	infoData	= info.GetValue (data, null);
+							PropertyInfo	info	= data.GetType ().GetProperty (fieldItem);
 
-							// Make Update string
-							readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+							if (null != info)
+							{
+								// Get value
+								object	infoData	= info.GetValue (data, null);
+
+								// Make Update string
+								readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
 							
-							// Get DB type
-							SqlDbType	dbType;
+								// Get DB type
+								SqlDbType	dbType;
 
-							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+								dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+								fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+							}
 						}
 
 						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
