@@ -9,6 +9,12 @@ namespace BaseBLL.Base
 	public class FieldAttribute : Attribute
 	{
 		/// <summary>
+		/// No Validate apply to that field
+		/// </summary>
+		/// <returns></returns>
+		public bool noValidate { get; set; }
+
+		/// <summary>
 		/// Field Name
 		/// </summary>
 		public string name

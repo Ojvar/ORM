@@ -40,20 +40,29 @@ namespace BaseBLL.Common
 				{
 					object	nullable	= attr.GetType ().GetProperty ("nullable", BindingFlags.Public | BindingFlags.Instance).GetValue (attr, null);
 					object	size		= attr.GetType ().GetProperty ("size", BindingFlags.Public | BindingFlags.Instance).GetValue (attr, null);
-					
-					if (nullable is bool)
+					object	noValidate	= attr.GetType ().GetProperty ("noValidate", BindingFlags.Public | BindingFlags.Instance).GetValue (attr, null);
+
+					if (noValidate is bool)
 					{
-						bool isNull	= Convert.ToBoolean (nullable);
+						bool noValidateValue	= Convert.ToBoolean (noValidate);
 
-						if (!isNull && (value == null))
-							result.message.Add(string.Format("{0} value can't be null", prop.Name));
+						if (noValidateValue)
+						{
+							if (nullable is bool)
+							{
+								bool isNull	= Convert.ToBoolean (nullable);
+
+								if (!isNull && (value == null))
+									result.message.Add(string.Format("{0} value can't be null", prop.Name));
+							}
+
+							decimal	fieldSize;
+
+							if (Decimal.TryParse (size.ToString (), out fieldSize))
+								if ((fieldSize > 0) && (value != null) && (value.ToString().Length > fieldSize))
+									result.message.Add(string.Format("{0} size error, maximum length is {1}", prop.Name, fieldSize));
+						}
 					}
-
-					decimal	fieldSize;
-
-					if (Decimal.TryParse (size.ToString (), out fieldSize))
-						if ((fieldSize > 0) && (value != null) && (value.ToString().Length > fieldSize))
-							result.message.Add(string.Format("{0} size error, maximum length is {1}", prop.Name, fieldSize));
 				}
 
 				result.isValid	= (result.message.Count == 0);
