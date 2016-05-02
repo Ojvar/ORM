@@ -63,6 +63,7 @@ namespace ClassGenerator.Resources {
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Data;
+        ///using BaseDAL.Model;
         ///
         ///namespace {0}.BLL.Entity
         ///{{
@@ -81,6 +82,7 @@ namespace ClassGenerator.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
+        ///using BaseDAL.Model;
         ///
         ///namespace {0}.BLL.Logic
         ///{{

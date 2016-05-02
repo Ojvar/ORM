@@ -120,6 +120,7 @@
   <data name="ClassEntityDefinition" xml:space="preserve">
     <value>using System;
 using System.Data;
+using BaseDAL.Model;
 
 namespace {0}.BLL.Entity
 {{
@@ -132,6 +133,7 @@ namespace {0}.BLL.Entity
   </data>
   <data name="ClassLogicDefinition" xml:space="preserve">
     <value>using System;
+using BaseDAL.Model;
 
 namespace {0}.BLL.Logic
 {{
