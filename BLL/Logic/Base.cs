@@ -44,7 +44,7 @@ namespace BaseBLL.Logic
 		public Base (object dataSource)
 		{
 			// Save Connection type
-			if (null == datasource)
+			if (null == dataSource)
 				throw new NullReferenceException ();
 
 			this.datasource	= dataSource.ToString ();

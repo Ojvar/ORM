@@ -88,7 +88,7 @@ namespace ClassGenerator.Resources {
         ///{{
         ///	public class {1} : BaseBLL.Logic.Base&lt;BLL.Entity.{2}&gt;
         ///	{{
-        ///		public {1} (string type) : base (type)
+        ///		public {1} (object type) : base (type)
         ///		{{
         ///		}}
         ///	}}

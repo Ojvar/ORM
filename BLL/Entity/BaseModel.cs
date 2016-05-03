@@ -23,7 +23,7 @@ namespace BaseBLL.Entity
 		/// <param name="mode"></param>
 		public void copyTo (object target)
 		{
-			if ((null != target) && (object.ReferenceEquals (this, target)))
+			if ((null != target) && (this.GetType () == target.GetType ()))
 			{
 				object			source;
 				PropertyInfo	sourceInfo;
