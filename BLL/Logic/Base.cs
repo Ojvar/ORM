@@ -9,6 +9,7 @@ using BaseBLL.Common;
 using BaseBLL.Interface;
 using BaseDAL.Base;
 using BaseDAL.Model;
+using BaseBLL;
 
 namespace BaseBLL.Logic
 {
@@ -751,7 +752,6 @@ namespace BaseBLL.Logic
 			return result;
 		}
 
-		
         /// <summary>
         /// All data
         /// </summary>
@@ -904,6 +904,41 @@ namespace BaseBLL.Logic
 
 			return result;
 		}
+
+        /// <summary>
+        /// Validate size
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public virtual bool validateSize (object model, string propertyName)
+        {
+            bool	result	= false;
+			int		len		= 0;
+
+			// Get Property
+			PropertyInfo	prop	= model.GetType ().GetProperty (propertyName, BindingFlags.Public | BindingFlags.Instance);
+
+			if (null != prop)
+			{
+				object[]	cProp	= prop.GetCustomAttributes (typeof (BaseBLL.Base.FieldAttribute), true);
+				object		data	= prop.GetValue (model, null);
+
+				// Get data value
+				if (data is Array)
+					len		= ((Array)data).Length;
+				else if (data is string)
+					len		= data.ToString ().Length;
+				else
+					throw new InvalidCastException ();
+
+				// Valdate size
+				if (null != prop)
+					foreach (FieldAttribute attr in cProp)
+						result	|= (attr.size > len);
+			}
+
+            return result;
+        }
 	#endregion
 
 	#region Foreign Field
@@ -946,6 +981,32 @@ namespace BaseBLL.Logic
 	#endregion
 
 	#region Class Methods
+		/// <summary>
+		/// Get Field Attribute value
+		/// </summary>
+		/// <returns></returns>
+		public object getFieldAttributeValue (string propertyName, string attrName)
+		{
+			object			result	= null;
+			PropertyInfo	prop	= typeof (T).GetProperty (propertyName, BindingFlags.Public | BindingFlags.Instance);
+
+			if (null != prop)
+			{
+				object[]	attrs	= prop.GetCustomAttributes (typeof (BaseBLL.Base.FieldAttribute), true);
+
+				if (null != attrs)
+					foreach (BaseBLL.Base.FieldAttribute attr in attrs)
+					{
+						PropertyInfo	pInfo	= attr.GetType ().GetProperty (attrName, BindingFlags.Public | BindingFlags.Instance);
+
+						if (null != pInfo)
+							result	= pInfo.GetValue (attr, null);
+					}
+			}
+
+			return result;
+		}
+
 		/// <summary>
 		/// Copy model
 		/// </summary>

@@ -22,6 +22,11 @@ namespace ojvarORM
 				new BaseDAL.Model.ConnectionModel () { dataSource=".", initCatalog="ProjectManagement", integratedSec=true });
 			
 			BLL.Logic.Document	lDoc	= new BLL.Logic.Document (Common.Enum.DAL.enumConnectionType.Test.ToString ());
+			
+
+			BLL.Entity.Document	doc	=  new BLL.Entity.Document () { folderName="XBOX" };
+			lDoc.validateSize (doc, "folderName");
+			
 			CommandResult	cR	= lDoc.create (new BLL.Entity.Document () {
 				areaId			= 1,
 				assumed			= "",

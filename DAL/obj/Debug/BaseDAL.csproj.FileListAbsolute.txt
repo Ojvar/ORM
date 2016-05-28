@@ -2,3 +2,4 @@ D:\Source\Codes\CommercialWorks\ojvar-orm\DAL\bin\Debug\BaseDAL.dll
 D:\Source\Codes\CommercialWorks\ojvar-orm\DAL\bin\Debug\BaseDAL.pdb
 D:\Source\Codes\CommercialWorks\ojvar-orm\DAL\obj\Debug\BaseDAL.dll
 D:\Source\Codes\CommercialWorks\ojvar-orm\DAL\obj\Debug\BaseDAL.pdb
+D:\Source\Codes\CommercialWorks\ojvar-orm\DAL\obj\Debug\BaseDAL.csprojResolveAssemblyReference.cache

@@ -6,6 +6,7 @@ namespace BaseBLL.Base
 	/// <summary>
 	/// Field Attributes
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 	public class FieldAttribute : Attribute
 	{
 		/// <summary>
