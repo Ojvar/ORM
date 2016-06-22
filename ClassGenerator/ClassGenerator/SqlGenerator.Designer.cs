@@ -52,6 +52,8 @@
 			this.saveToFileCheckbox = new System.Windows.Forms.CheckBox();
 			this.savePathTextbox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
+			this.postfixNamespaceTextbox = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
 			this.namespaceTextbox = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.entityBaseCombobox = new System.Windows.Forms.ComboBox();
@@ -96,7 +98,7 @@
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox1.Size = new System.Drawing.Size(1104, 161);
+			this.groupBox1.Size = new System.Drawing.Size(777, 161);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Connection Parameters";
@@ -108,14 +110,14 @@
 			this.messageLabel.ForeColor = System.Drawing.Color.Maroon;
 			this.messageLabel.Location = new System.Drawing.Point(17, 123);
 			this.messageLabel.Name = "messageLabel";
-			this.messageLabel.Size = new System.Drawing.Size(118, 18);
+			this.messageLabel.Size = new System.Drawing.Size(95, 15);
 			this.messageLabel.TabIndex = 5;
 			this.messageLabel.Text = "Last Message : -";
 			// 
 			// connectToDbButton
 			// 
 			this.connectToDbButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.connectToDbButton.Location = new System.Drawing.Point(974, 112);
+			this.connectToDbButton.Location = new System.Drawing.Point(647, 112);
 			this.connectToDbButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectToDbButton.Name = "connectToDbButton";
 			this.connectToDbButton.Size = new System.Drawing.Size(124, 41);
@@ -125,10 +127,10 @@
 			// 
 			// passwordTextbox
 			// 
-			this.passwordTextbox.Location = new System.Drawing.Point(466, 67);
+			this.passwordTextbox.Location = new System.Drawing.Point(401, 61);
 			this.passwordTextbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.passwordTextbox.Name = "passwordTextbox";
-			this.passwordTextbox.Size = new System.Drawing.Size(193, 26);
+			this.passwordTextbox.Size = new System.Drawing.Size(193, 23);
 			this.passwordTextbox.TabIndex = 3;
 			this.passwordTextbox.Text = "1365";
 			this.passwordTextbox.UseSystemPasswordChar = true;
@@ -136,54 +138,54 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(382, 71);
+			this.label4.Location = new System.Drawing.Point(337, 65);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(69, 18);
+			this.label4.Size = new System.Drawing.Size(58, 15);
 			this.label4.TabIndex = 0;
 			this.label4.Text = "Password";
 			// 
 			// usernameTextbox
 			// 
-			this.usernameTextbox.Location = new System.Drawing.Point(143, 67);
+			this.usernameTextbox.Location = new System.Drawing.Point(112, 62);
 			this.usernameTextbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.usernameTextbox.Name = "usernameTextbox";
-			this.usernameTextbox.Size = new System.Drawing.Size(193, 26);
+			this.usernameTextbox.Size = new System.Drawing.Size(193, 23);
 			this.usernameTextbox.TabIndex = 2;
 			this.usernameTextbox.Text = "sa";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(48, 71);
+			this.label3.Location = new System.Drawing.Point(48, 66);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(82, 18);
+			this.label3.Size = new System.Drawing.Size(66, 15);
 			this.label3.TabIndex = 0;
 			this.label3.Text = "User Name";
 			// 
 			// initialiCatalogTextbox
 			// 
-			this.initialiCatalogTextbox.Location = new System.Drawing.Point(466, 31);
+			this.initialiCatalogTextbox.Location = new System.Drawing.Point(401, 30);
 			this.initialiCatalogTextbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.initialiCatalogTextbox.Name = "initialiCatalogTextbox";
-			this.initialiCatalogTextbox.Size = new System.Drawing.Size(193, 26);
+			this.initialiCatalogTextbox.Size = new System.Drawing.Size(193, 23);
 			this.initialiCatalogTextbox.TabIndex = 1;
 			this.initialiCatalogTextbox.Text = "PMOld";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(356, 35);
+			this.label2.Location = new System.Drawing.Point(311, 34);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(94, 18);
+			this.label2.Size = new System.Drawing.Size(79, 15);
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Initial Catalog";
 			// 
 			// dataSourceTextbox
 			// 
-			this.dataSourceTextbox.Location = new System.Drawing.Point(143, 31);
+			this.dataSourceTextbox.Location = new System.Drawing.Point(112, 31);
 			this.dataSourceTextbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.dataSourceTextbox.Name = "dataSourceTextbox";
-			this.dataSourceTextbox.Size = new System.Drawing.Size(193, 26);
+			this.dataSourceTextbox.Size = new System.Drawing.Size(193, 23);
 			this.dataSourceTextbox.TabIndex = 0;
 			this.dataSourceTextbox.Text = ".";
 			// 
@@ -192,7 +194,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(17, 35);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(107, 18);
+			this.label1.Size = new System.Drawing.Size(89, 15);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Server Address";
 			// 
@@ -210,17 +212,17 @@
 			this.pageTabControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageTabControl.Name = "pageTabControl";
 			this.pageTabControl.SelectedIndex = 0;
-			this.pageTabControl.Size = new System.Drawing.Size(1125, 411);
+			this.pageTabControl.Size = new System.Drawing.Size(798, 411);
 			this.pageTabControl.TabIndex = 1;
 			// 
 			// connectionTabPage
 			// 
 			this.connectionTabPage.Controls.Add(this.groupBox1);
-			this.connectionTabPage.Location = new System.Drawing.Point(4, 27);
+			this.connectionTabPage.Location = new System.Drawing.Point(4, 24);
 			this.connectionTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.connectionTabPage.Name = "connectionTabPage";
 			this.connectionTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.connectionTabPage.Size = new System.Drawing.Size(1117, 380);
+			this.connectionTabPage.Size = new System.Drawing.Size(790, 383);
 			this.connectionTabPage.TabIndex = 0;
 			this.connectionTabPage.Text = "Connection";
 			this.connectionTabPage.UseVisualStyleBackColor = true;
@@ -230,11 +232,11 @@
 			this.databaseTabPage.Controls.Add(this.loadFieldsButton);
 			this.databaseTabPage.Controls.Add(this.tablesRefreshButton);
 			this.databaseTabPage.Controls.Add(this.groupBox2);
-			this.databaseTabPage.Location = new System.Drawing.Point(4, 27);
+			this.databaseTabPage.Location = new System.Drawing.Point(4, 24);
 			this.databaseTabPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.databaseTabPage.Name = "databaseTabPage";
 			this.databaseTabPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.databaseTabPage.Size = new System.Drawing.Size(1117, 380);
+			this.databaseTabPage.Size = new System.Drawing.Size(790, 383);
 			this.databaseTabPage.TabIndex = 1;
 			this.databaseTabPage.Text = "Database Details";
 			this.databaseTabPage.UseVisualStyleBackColor = true;
@@ -242,7 +244,7 @@
 			// loadFieldsButton
 			// 
 			this.loadFieldsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.loadFieldsButton.Location = new System.Drawing.Point(987, 331);
+			this.loadFieldsButton.Location = new System.Drawing.Point(660, 331);
 			this.loadFieldsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.loadFieldsButton.Name = "loadFieldsButton";
 			this.loadFieldsButton.Size = new System.Drawing.Size(124, 41);
@@ -253,7 +255,7 @@
 			// tablesRefreshButton
 			// 
 			this.tablesRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.tablesRefreshButton.Location = new System.Drawing.Point(857, 331);
+			this.tablesRefreshButton.Location = new System.Drawing.Point(530, 331);
 			this.tablesRefreshButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tablesRefreshButton.Name = "tablesRefreshButton";
 			this.tablesRefreshButton.Size = new System.Drawing.Size(124, 41);
@@ -271,7 +273,7 @@
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox2.Size = new System.Drawing.Size(1104, 315);
+			this.groupBox2.Size = new System.Drawing.Size(777, 315);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Table(s) List";
@@ -297,7 +299,7 @@
 			this.tablesGrid.ReadOnly = true;
 			this.tablesGrid.RowTemplate.Height = 24;
 			this.tablesGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.tablesGrid.Size = new System.Drawing.Size(1090, 279);
+			this.tablesGrid.Size = new System.Drawing.Size(763, 279);
 			this.tablesGrid.TabIndex = 0;
 			// 
 			// fieldsTabPage
@@ -305,6 +307,8 @@
 			this.fieldsTabPage.Controls.Add(this.saveToFileCheckbox);
 			this.fieldsTabPage.Controls.Add(this.savePathTextbox);
 			this.fieldsTabPage.Controls.Add(this.label7);
+			this.fieldsTabPage.Controls.Add(this.postfixNamespaceTextbox);
+			this.fieldsTabPage.Controls.Add(this.label8);
 			this.fieldsTabPage.Controls.Add(this.namespaceTextbox);
 			this.fieldsTabPage.Controls.Add(this.label6);
 			this.fieldsTabPage.Controls.Add(this.entityBaseCombobox);
@@ -312,10 +316,10 @@
 			this.fieldsTabPage.Controls.Add(this.fieldsRefreshButton);
 			this.fieldsTabPage.Controls.Add(this.groupBox3);
 			this.fieldsTabPage.Controls.Add(this.generateScriptButton);
-			this.fieldsTabPage.Location = new System.Drawing.Point(4, 27);
+			this.fieldsTabPage.Location = new System.Drawing.Point(4, 24);
 			this.fieldsTabPage.Name = "fieldsTabPage";
 			this.fieldsTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.fieldsTabPage.Size = new System.Drawing.Size(1117, 380);
+			this.fieldsTabPage.Size = new System.Drawing.Size(790, 383);
 			this.fieldsTabPage.TabIndex = 3;
 			this.fieldsTabPage.Text = "Fields";
 			this.fieldsTabPage.UseVisualStyleBackColor = true;
@@ -324,46 +328,64 @@
 			// 
 			this.saveToFileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.saveToFileCheckbox.AutoSize = true;
-			this.saveToFileCheckbox.Location = new System.Drawing.Point(737, 344);
+			this.saveToFileCheckbox.Location = new System.Drawing.Point(211, 363);
 			this.saveToFileCheckbox.Name = "saveToFileCheckbox";
-			this.saveToFileCheckbox.Size = new System.Drawing.Size(110, 22);
-			this.saveToFileCheckbox.TabIndex = 6;
+			this.saveToFileCheckbox.Size = new System.Drawing.Size(92, 19);
+			this.saveToFileCheckbox.TabIndex = 3;
 			this.saveToFileCheckbox.Text = "Save To File";
 			this.saveToFileCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// savePathTextbox
 			// 
 			this.savePathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.savePathTextbox.Location = new System.Drawing.Point(134, 340);
+			this.savePathTextbox.Location = new System.Drawing.Point(134, 337);
 			this.savePathTextbox.Name = "savePathTextbox";
-			this.savePathTextbox.Size = new System.Drawing.Size(597, 26);
+			this.savePathTextbox.Size = new System.Drawing.Size(169, 23);
 			this.savePathTextbox.TabIndex = 2;
 			// 
 			// label7
 			// 
 			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(54, 344);
+			this.label7.Location = new System.Drawing.Point(66, 341);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(74, 18);
+			this.label7.Size = new System.Drawing.Size(62, 15);
 			this.label7.TabIndex = 5;
 			this.label7.Text = "Save Path";
+			// 
+			// postfixNamespaceTextbox
+			// 
+			this.postfixNamespaceTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.postfixNamespaceTextbox.Location = new System.Drawing.Point(457, 337);
+			this.postfixNamespaceTextbox.Name = "postfixNamespaceTextbox";
+			this.postfixNamespaceTextbox.Size = new System.Drawing.Size(122, 23);
+			this.postfixNamespaceTextbox.TabIndex = 5;
+			// 
+			// label8
+			// 
+			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(340, 341);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(111, 15);
+			this.label8.TabIndex = 5;
+			this.label8.Text = "PostFix-Namespace";
 			// 
 			// namespaceTextbox
 			// 
 			this.namespaceTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.namespaceTextbox.Location = new System.Drawing.Point(478, 308);
+			this.namespaceTextbox.Location = new System.Drawing.Point(457, 308);
 			this.namespaceTextbox.Name = "namespaceTextbox";
-			this.namespaceTextbox.Size = new System.Drawing.Size(253, 26);
-			this.namespaceTextbox.TabIndex = 1;
+			this.namespaceTextbox.Size = new System.Drawing.Size(122, 23);
+			this.namespaceTextbox.TabIndex = 4;
 			// 
 			// label6
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(387, 312);
+			this.label6.Location = new System.Drawing.Point(382, 312);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(85, 18);
+			this.label6.Size = new System.Drawing.Size(69, 15);
 			this.label6.TabIndex = 5;
 			this.label6.Text = "Namespace";
 			// 
@@ -374,27 +396,27 @@
 			this.entityBaseCombobox.FormattingEnabled = true;
 			this.entityBaseCombobox.Location = new System.Drawing.Point(134, 308);
 			this.entityBaseCombobox.Name = "entityBaseCombobox";
-			this.entityBaseCombobox.Size = new System.Drawing.Size(247, 26);
-			this.entityBaseCombobox.TabIndex = 0;
+			this.entityBaseCombobox.Size = new System.Drawing.Size(169, 23);
+			this.entityBaseCombobox.TabIndex = 1;
 			// 
 			// label5
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(13, 312);
+			this.label5.Location = new System.Drawing.Point(32, 311);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(115, 18);
+			this.label5.Size = new System.Drawing.Size(96, 15);
 			this.label5.TabIndex = 1;
 			this.label5.Text = "EntityBase Type";
 			// 
 			// fieldsRefreshButton
 			// 
 			this.fieldsRefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.fieldsRefreshButton.Location = new System.Drawing.Point(857, 332);
+			this.fieldsRefreshButton.Location = new System.Drawing.Point(659, 302);
 			this.fieldsRefreshButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.fieldsRefreshButton.Name = "fieldsRefreshButton";
-			this.fieldsRefreshButton.Size = new System.Drawing.Size(124, 41);
-			this.fieldsRefreshButton.TabIndex = 3;
+			this.fieldsRefreshButton.Size = new System.Drawing.Size(124, 34);
+			this.fieldsRefreshButton.TabIndex = 6;
 			this.fieldsRefreshButton.Text = "Refresh";
 			this.fieldsRefreshButton.UseVisualStyleBackColor = true;
 			// 
@@ -408,7 +430,7 @@
 			this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.groupBox3.Size = new System.Drawing.Size(1103, 293);
+			this.groupBox3.Size = new System.Drawing.Size(776, 293);
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Field(s) List";
@@ -433,27 +455,27 @@
 			this.fieldsGrid.Name = "fieldsGrid";
 			this.fieldsGrid.RowTemplate.Height = 24;
 			this.fieldsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.fieldsGrid.Size = new System.Drawing.Size(1089, 257);
+			this.fieldsGrid.Size = new System.Drawing.Size(762, 257);
 			this.fieldsGrid.TabIndex = 0;
 			// 
 			// generateScriptButton
 			// 
 			this.generateScriptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.generateScriptButton.Location = new System.Drawing.Point(987, 332);
+			this.generateScriptButton.Location = new System.Drawing.Point(660, 342);
 			this.generateScriptButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.generateScriptButton.Name = "generateScriptButton";
-			this.generateScriptButton.Size = new System.Drawing.Size(124, 41);
-			this.generateScriptButton.TabIndex = 4;
+			this.generateScriptButton.Size = new System.Drawing.Size(124, 34);
+			this.generateScriptButton.TabIndex = 7;
 			this.generateScriptButton.Text = "Generate";
 			this.generateScriptButton.UseVisualStyleBackColor = true;
 			// 
 			// scriptTabPage
 			// 
 			this.scriptTabPage.Controls.Add(this.scriptTextbox);
-			this.scriptTabPage.Location = new System.Drawing.Point(4, 27);
+			this.scriptTabPage.Location = new System.Drawing.Point(4, 24);
 			this.scriptTabPage.Name = "scriptTabPage";
 			this.scriptTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.scriptTabPage.Size = new System.Drawing.Size(1117, 380);
+			this.scriptTabPage.Size = new System.Drawing.Size(790, 383);
 			this.scriptTabPage.TabIndex = 2;
 			this.scriptTabPage.Text = "Script";
 			this.scriptTabPage.UseVisualStyleBackColor = true;
@@ -468,7 +490,7 @@
 			this.scriptTextbox.Multiline = true;
 			this.scriptTextbox.Name = "scriptTextbox";
 			this.scriptTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.scriptTextbox.Size = new System.Drawing.Size(1105, 368);
+			this.scriptTextbox.Size = new System.Drawing.Size(778, 368);
 			this.scriptTextbox.TabIndex = 0;
 			// 
 			// menuStrip1
@@ -480,7 +502,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-			this.menuStrip1.Size = new System.Drawing.Size(1153, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(826, 25);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -489,20 +511,20 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.quitMenu});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(40, 22);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(36, 19);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// quitMenu
 			// 
 			this.quitMenu.Name = "quitMenu";
-			this.quitMenu.Size = new System.Drawing.Size(108, 26);
+			this.quitMenu.Size = new System.Drawing.Size(97, 22);
 			this.quitMenu.Text = "Quit";
 			// 
 			// SqlGenerator
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1153, 470);
+			this.ClientSize = new System.Drawing.Size(826, 470);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.pageTabControl);
 			this.Font = new System.Drawing.Font("Tahoma", 10F);
@@ -566,6 +588,8 @@
 		private System.Windows.Forms.TextBox savePathTextbox;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.CheckBox saveToFileCheckbox;
+		private System.Windows.Forms.TextBox postfixNamespaceTextbox;
+		private System.Windows.Forms.Label label8;
 	}
 }
 

@@ -270,6 +270,7 @@ namespace ClassGenerator
 			string classLogicDef;
 			string baseClass;
 			string namespaceValue;
+			string postfixNamespace;
 			string fieldStr;
 			string entityName;
 			string logicName;
@@ -281,8 +282,13 @@ namespace ClassGenerator
 
 			// Prepare
 			namespaceValue		= namespaceTextbox.Text.Trim ();
+			postfixNamespace	= postfixNamespaceTextbox.Text.Trim ();
 			saveToFile			= saveToFileCheckbox.Checked;
 			scriptTextbox.Text	= "";
+
+			if(postfixNamespace.Length > 0)
+				postfixNamespace	= "." + postfixNamespace;
+
 
 			if (string.IsNullOrWhiteSpace (namespaceValue))
 			{
@@ -298,7 +304,10 @@ namespace ClassGenerator
 						Field field = currentTable.getFields ().Find (x => x.getName () == row.Cells["FieldName"].Value.ToString ());
 
 						if (null != field)
+						{
+							field.postfixNamespace	= postfixNamespaceTextbox.Text.Trim ();
 							fieldsScript.Add (field.generateScript ());
+						}
 					}
 			#endregion
 
@@ -316,8 +325,8 @@ namespace ClassGenerator
 			#endregion
 
 			#region Generate definition
-				entityResult = string.Format (classEntityDef, namespaceValue, entityName, baseClass, fieldStr);
-				logicResult = string.Format (classLogicDef, namespaceValue, logicName, entityName);
+				entityResult = string.Format (classEntityDef, namespaceValue, postfixNamespace, entityName, baseClass, fieldStr);
+				logicResult = string.Format (classLogicDef, namespaceValue, postfixNamespace, logicName, entityName);
 			#endregion
 
 			#region Save to file

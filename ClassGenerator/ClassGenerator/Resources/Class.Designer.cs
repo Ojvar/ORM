@@ -65,12 +65,12 @@ namespace ClassGenerator.Resources {
         ///using System.Data;
         ///using BaseDAL.Model;
         ///
-        ///namespace {0}.BLL.Entity
+        ///namespace {0}.BLL.Entity{1}
         ///{{
         ///	[Serializable]
-        ///	public class {1} : {2}
+        ///	public class {2} : {3}
         ///	{{
-        ///		{3}
+        ///		{4}
         ///	}}
         ///}}.
         /// </summary>
@@ -84,11 +84,11 @@ namespace ClassGenerator.Resources {
         ///   Looks up a localized string similar to using System;
         ///using BaseDAL.Model;
         ///
-        ///namespace {0}.BLL.Logic
+        ///namespace {0}.BLL.Logic{1}
         ///{{
-        ///	public class {1} : BaseBLL.Logic.Base&lt;BLL.Entity.{2}&gt;
+        ///	public class {2} : BaseBLL.Logic.Base&lt;BLL.Entity{1}.{3}&gt;
         ///	{{
-        ///		public {1} (object type) : base (type)
+        ///		public {2} (object type) : base (type)
         ///		{{
         ///		}}
         ///	}}

@@ -70,13 +70,12 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///	//
+        ///   Looks up a localized string similar to //
         ///	// Genereted Property of {3}
         ///	//
         ///	#region Referenced Property - {2}
-        ///		BLL.Entity.{0}{7} _{2}_{3};
-        ///		public BLL.Entity.{0}{7} {2}_{3}
+        ///		BLL.Entity{8}.{0}{7} _{2}_{3};
+        ///		public BLL.Entity{8}.{0}{7} {2}_{3}
         ///		{{
         ///			get
         ///			{{
@@ -92,12 +91,11 @@ namespace ClassGenerator.Resources {
         ///
         ///		public void load_{2}_{3} ()
         ///		{{ 
-        ///			BLL.Entity.{0}	entity;
-        ///			BLL.Logic.{1}	logic;
+        ///			BLL.Entity{8}.{0}	entity;
+        ///			BLL.Logic{8}.{1}	logic;
         ///
-        ///			entity	= new {0} () {{ {5} = {3} }};
-        ///			logic	= new BLL.Logic.{1} (&quot;{6}&quot;);
-        ///			logic.read  [rest of string was truncated]&quot;;.
+        ///			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3} }};
+        ///			logic	= new BLL.Logic{8}.{1 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FieldForeignKey {
             get {
@@ -110,8 +108,8 @@ namespace ClassGenerator.Resources {
         ///	// Genereted Property of {3}
         ///	//
         ///	#region Referenced Property - {2}
-        ///		BLL.Entity.{0}{7} _{2}_{3};
-        ///		public BLL.Entity.{0}{7} {2}_{3}
+        ///		BLL.Entity{8}.{0}{7} _{2}_{3};
+        ///		public BLL.Entity{8}.{0}{7} {2}_{3}
         ///		{{
         ///			get
         ///			{{
@@ -127,11 +125,11 @@ namespace ClassGenerator.Resources {
         ///
         ///		public void load_{2}_{3} ()
         ///		{{ 
-        ///			BLL.Entity.{0}	entity;
-        ///			BLL.Logic.{1}	logic;
+        ///			BLL.Entity{8}.{0}	entity;
+        ///			BLL.Logic{8}.{1}	logic;
         ///
-        ///			entity	= new {0} () {{ {5} = {3}.Value }};
-        ///			logic	= new BLL.Logic.{1} (&quot;{ [rest of string was truncated]&quot;;.
+        ///			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3}.Value }};
+        ///			log [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FieldForeignKeyNullable {
             get {
@@ -155,8 +153,7 @@ namespace ClassGenerator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///	//
+        ///   Looks up a localized string similar to //
         ///	// Genereted Property of {0}
         ///	//
         ///	#region Relation - {0} (Has-Many relation)
@@ -180,7 +177,7 @@ namespace ClassGenerator.Resources {
         ///		{{
         ///			CommandResult	opResult;
         ///
-        ///			BLL.Logic.{0}	logic	= new BLL.Logi [rest of string was truncated]&quot;;.
+        ///			BLL.Logic{4}.{0}	logic	= new BLL.Logi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FieldReferentialKey {
             get {

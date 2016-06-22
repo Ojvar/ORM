@@ -31,6 +31,15 @@ namespace ClassGenerator.Classes
 		}
 
 		/// <summary>
+		/// Postfix Namespace
+		/// </summary>
+		public string postfixNamespace
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Get IsPrimary
 		/// </summary>
 		public bool getFieldIsPrimary ()
@@ -415,7 +424,14 @@ namespace ClassGenerator.Classes
 				attr.Add (string.Format ("{0}=\"{1}\"", "validationString", getFieldValidationString ()));
 
 			if (getFieldRefereneTable () != "")
-				attr.Add (string.Format ("{0}=typeof (BLL.Logic.{1})", "foreignLogicType", getFieldRefereneTable ()));
+			{
+				string refPostfixNamespace	= postfixNamespace.Trim ();
+
+				if (refPostfixNamespace.Length > 0)
+					refPostfixNamespace	= "." + refPostfixNamespace;
+
+				attr.Add (string.Format ("{0}=typeof (BLL.Logic{1}.{2})", "foreignLogicType", refPostfixNamespace, getFieldRefereneTable ()));
+			}
 
 			if (getFieldRefereneField () != "")
 				attr.Add (string.Format ("{0}=\"{1}\"", "foreignField", getFieldRefereneField ()));
@@ -450,22 +466,27 @@ namespace ClassGenerator.Classes
 				string	refForeignKey;
 				string	refConnection;
 				string	refNullSign;
+				string	refPostfixNamespace;
 
 				if (getFieldNullable ())
 					def				= Resources.Field.FieldForeignKeyNullable;
 				else
 					def				= Resources.Field.FieldForeignKey;
-				refEntityName	= getFieldRefereneTable ();						// {0} EntityName
-				refLogicName	= refEntityName;								// {1} LogicName
-				refFieldName	= refEntityName;								// {2} FieldName
-				refFieldValue	= getFieldName ();								// {3} FieldValue - Current Entity Property
-				refFieldType	= getFieldCsType ().ToString ();				// {4} FieldType
-				refForeignKey	= getFieldRefereneField ();						// {5} ForeignKeyField
-				refConnection	= parent.getParent ().getName ();				// {6} Connection
-				refNullSign		= ""; //(getFieldNullable () ? "?" : "");		// {7} IsNUll?
+				refEntityName		= getFieldRefereneTable ();						// {0} EntityName
+				refLogicName		= refEntityName;								// {1} LogicName
+				refFieldName		= refEntityName;								// {2} FieldName
+				refFieldValue		= getFieldName ();								// {3} FieldValue - Current Entity Property
+				refFieldType		= getFieldCsType ().ToString ();				// {4} FieldType
+				refForeignKey		= getFieldRefereneField ();						// {5} ForeignKeyField
+				refConnection		= parent.getParent ().getName ();				// {6} Connection
+				refNullSign			= ""; //(getFieldNullable () ? "?" : "");		// {7} IsNUll?
+				refPostfixNamespace	= postfixNamespace.Trim ();
+				
+				if (refPostfixNamespace.Length > 0)
+					refPostfixNamespace	= "." + refPostfixNamespace;
 			
 				// Generate property string
-				def = string.Format(def, refEntityName, refLogicName, refFieldName, refFieldValue, refFieldType, refForeignKey, refConnection, refNullSign);
+				def = string.Format(def, refEntityName, refLogicName, refFieldName, refFieldValue, refFieldType, refForeignKey, refConnection, refNullSign, refPostfixNamespace);
 
 				//result	+= string.Format ("\r\n{1}", refFieldName, def);
 				result	+= string.Format ("\r\n{0}", def);
@@ -480,7 +501,12 @@ namespace ClassGenerator.Classes
 				{
 					string	def;
 					
-					def	= string.Format (Resources.Field.FieldReferentialKey, key.foreignTable.Replace (".", "__"), key.foreignColumn, key.primaryColumn, parent.getParent ().getName ());
+					string refPostfixNamespace	= postfixNamespace.Trim ();
+
+					if (refPostfixNamespace.Length > 0)
+						refPostfixNamespace	= "." + refPostfixNamespace;
+
+					def	= string.Format (Resources.Field.FieldReferentialKey, key.foreignTable.Replace (".", "__"), key.foreignColumn, key.primaryColumn, parent.getParent ().getName (), refPostfixNamespace);
 
 					// Append to result
 					result	+= string.Format ("\r\n{0}", def);

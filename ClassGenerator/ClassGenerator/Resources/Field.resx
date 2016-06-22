@@ -121,13 +121,12 @@
     <value>[BaseBLL.Base.Field({0})]</value>
   </data>
   <data name="FieldForeignKey" xml:space="preserve">
-    <value>
-	//
+    <value>//
 	// Genereted Property of {3}
 	//
 	#region Referenced Property - {2}
-		BLL.Entity.{0}{7} _{2}_{3};
-		public BLL.Entity.{0}{7} {2}_{3}
+		BLL.Entity{8}.{0}{7} _{2}_{3};
+		public BLL.Entity{8}.{0}{7} {2}_{3}
 		{{
 			get
 			{{
@@ -143,11 +142,11 @@
 
 		public void load_{2}_{3} ()
 		{{ 
-			BLL.Entity.{0}	entity;
-			BLL.Logic.{1}	logic;
+			BLL.Entity{8}.{0}	entity;
+			BLL.Logic{8}.{1}	logic;
 
-			entity	= new {0} () {{ {5} = {3} }};
-			logic	= new BLL.Logic.{1} ("{6}");
+			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3} }};
+			logic	= new BLL.Logic{8}.{1} ("{6}");
 			logic.read (entity);
 
 			_{2}_{3}	= entity;
@@ -159,8 +158,8 @@
 	// Genereted Property of {3}
 	//
 	#region Referenced Property - {2}
-		BLL.Entity.{0}{7} _{2}_{3};
-		public BLL.Entity.{0}{7} {2}_{3}
+		BLL.Entity{8}.{0}{7} _{2}_{3};
+		public BLL.Entity{8}.{0}{7} {2}_{3}
 		{{
 			get
 			{{
@@ -176,11 +175,11 @@
 
 		public void load_{2}_{3} ()
 		{{ 
-			BLL.Entity.{0}	entity;
-			BLL.Logic.{1}	logic;
+			BLL.Entity{8}.{0}	entity;
+			BLL.Logic{8}.{1}	logic;
 
-			entity	= new {0} () {{ {5} = {3}.Value }};
-			logic	= new BLL.Logic.{1} ("{6}");
+			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3}.Value }};
+			logic	= new BLL.Logic{8}.{1} ("{6}");
 			logic.read (entity);
 
 			_{2}_{3}	= entity;
@@ -264,8 +263,7 @@ WHERE
 </value>
   </data>
   <data name="FieldReferentialKey" xml:space="preserve">
-    <value>
-	//
+    <value>//
 	// Genereted Property of {0}
 	//
 	#region Relation - {0} (Has-Many relation)
@@ -289,7 +287,7 @@ WHERE
 		{{
 			CommandResult	opResult;
 
-			BLL.Logic.{0}	logic	= new BLL.Logic.{0} ("{3}");
+			BLL.Logic{4}.{0}	logic	= new BLL.Logic{4}.{0} ("{3}");
 			if (pageIndex == -1)
 				opResult	= logic.allData ("{1} = @{1}", "", false, true, new KeyValuePair ("@{1}", {2}));
 			else
