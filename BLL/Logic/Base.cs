@@ -32,6 +32,14 @@ namespace BaseBLL.Logic
 				return "__rowNumber";
 			}
 		}
+		
+		public SqlConnection sqlConnection 
+		{
+			get
+			{
+				return connection;
+			}
+		}
 
 		protected SqlConnection	connection	= null;
 		protected string		datasource;
@@ -417,7 +425,7 @@ namespace BaseBLL.Logic
 							if ((dt != null) && (dt.Rows.Count > 0))
 								parseInline (data, dt.Rows[0]);
 
-							result.model	= data;
+							result.model	= dt;
 						}
 					#endregion
 					}
@@ -438,7 +446,7 @@ namespace BaseBLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult read (object data, string field, bool closeConnection = true)
+		public virtual CommandResult read (object data, string field, string criteria = "", bool closeConnection = true)
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -496,6 +504,9 @@ namespace BaseBLL.Logic
 							}
 						}
 
+						// Add User Criterial
+						if (!criteria.isNullOrEmptyOrWhiteSpaces ())
+							readCriteria	= "AND " + criteria + " " + readCriteria;
 						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
 							readCriteria = " WHERE " + readCriteria.Remove (0, 3);
 					}
@@ -550,7 +561,25 @@ namespace BaseBLL.Logic
 			CommandResult result = null;
             string tableName = this.GetType().Name;
 
-            result = allByViewNameByPaging(tableName, pageIndex, pageSize, criteria, orderBy, outputAsList, closeConnection, fieldValues);
+            result = allByViewNameByPaging(tableName, pageIndex, pageSize, criteria, orderBy, false, outputAsList, closeConnection, fieldValues);
+
+            return result;
+		}
+
+		/// <summary>
+		/// Read by Paging - Distinct
+		/// </summary>
+		/// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+		/// <param name="pageSize"></param>
+		/// <param name="criteria"></param>
+		/// <param name="outputAsList"></param>
+		/// <returns></returns>
+		public virtual CommandResult allByPagingDistinct (int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues)
+		{
+			CommandResult result = null;
+            string tableName = this.GetType().Name;
+
+            result = allByViewNameByPaging(tableName, pageIndex, pageSize, criteria, orderBy, true, outputAsList, closeConnection, fieldValues);
 
             return result;
 		}
@@ -563,16 +592,20 @@ namespace BaseBLL.Logic
 		/// <param name="criteria"></param>
 		/// <param name="outputAsList"></param>
 		/// <returns></returns>
-		public virtual CommandResult allByViewNameByPaging(string viewName, int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues)
+		public virtual CommandResult allByViewNameByPaging(string viewName, int pageIndex, int pageSize, string criteria = "",
+			string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues)
         {
-            CommandResult result = new CommandResult();
-            string command = "";
-            string tableName = "";
+            CommandResult	result			= new CommandResult();
+            string			command			= "";
+            string			commandDistinct = "";
+            string			tableName		= "";
 
         #region Setup parameters
             tableName = viewName.Replace("__", ".");
             command = "SELECT TOP 100 PERCENT base.* FROM " +
                 " (SELECT {6}, {5} FROM [{0}] {1}) AS base WHERE ({7} BETWEEN {2} AND {3}) {4}";
+            commandDistinct = "SELECT TOP 100 PERCENT base.* FROM " +
+                " (SELECT {6}, {5} FROM (SELECT DISTINCT * FROM [{0}] {1}) AS distBase) AS base WHERE ({7} BETWEEN {2} AND {3}) {4}";
         #endregion
 
         #region Prepare command
@@ -582,7 +615,7 @@ namespace BaseBLL.Logic
 			int	startRow	= ((pageIndex - 1) * pageSize) + 1;
 			int	endRow		= startRow + (pageSize - 1);
 
-            command = string.Format(command,
+            command = string.Format((distinct ? commandDistinct : command ),
 				tableName,
                 (criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"),
                 startRow, 
@@ -591,7 +624,7 @@ namespace BaseBLL.Logic
                 (pageIndex > -1 ? " ROW_NUMBER() OVER (ORDER BY ID) AS " + C_ROW_NUMBER + ", *" : "*"),
 				" COUNT (*) OVER () AS " + C_TOTAL_ROWS, 
 				C_ROW_NUMBER
-                );
+            );
         #endregion
 
         #region Run Command
@@ -652,6 +685,7 @@ namespace BaseBLL.Logic
     #endregion
 
     #region Public - Other methods
+		
         /// <summary>
         /// All data
         /// </summary>
@@ -660,22 +694,95 @@ namespace BaseBLL.Logic
         /// <param name="criteria"></param>
         /// <param name="outputAsList"></param>
         /// <returns></returns>
-        public virtual CommandResult allDataByViewName (string viewName, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+        public virtual CommandResult rawQuery (string command, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
-			CommandResult	result		= new CommandResult ();
-			string			command		= "";
-			string			tableName	= "";
+			CommandResult	result = new CommandResult ();
+
+		#region Run Command
+			if (null != connection)
+			{
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
+
+			#region Add total rows count & remove this column from result
+				if ((null != result) && (result.status == EnumCommandStatus.success))
+				{
+					DataTable	table	= result.model as DataTable;
+
+					if (null != table)
+					{
+						if ((table.Rows.Count > 0) && (table.Columns.Contains (C_TOTAL_ROWS)))
+						{
+							Hashtable extraData;
+							extraData		= new Hashtable ();
+							result.extra	= extraData;
+							extraData.Add (C_TOTAL_ROWS, Convert.ToInt32 (table.Rows[0][C_TOTAL_ROWS]));
+						}
+
+					#region Remove controll fields
+						if (table.Columns.IndexOf (C_TOTAL_ROWS) > -1)
+							table.Columns.Remove (C_TOTAL_ROWS);
+						if (table.Columns.IndexOf (C_ROW_NUMBER) > -1)
+							table.Columns.Remove (C_ROW_NUMBER);
+					#endregion
+
+					#region Convert to List
+						if (outputAsList)
+						{
+							List<T>	resultRows	= new List<T>();
+
+							foreach (DataRow row in table.Rows)
+								resultRows.Add (parse (row));
+							
+							// Clear Table Model
+							table.Dispose ();
+
+							// Add List Model
+							result.model	= resultRows;
+						}
+					#endregion
+					}
+				}
+			#endregion
+			}
+			else
+			{
+				result.status	= EnumCommandStatus.executeFailed;
+				result.message	= "Error: Connection null";
+			}
+		#endregion
+
+			return result;
+		}
+
+
+        /// <summary>
+        /// All data
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allDataByViewName (string viewName, string fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		{
+			CommandResult	result			= new CommandResult ();
+			string			command			= "";
+			string			commandDistinct	= "";
+			string			tableName		= "";
 
 		#region Setup parameters
-			tableName   = viewName.Replace ("__", ".");
-			command     = "SELECT * FROM [{0}] {1} {2}"; 
+			tableName		= viewName.Replace ("__", ".");
+			command			= "SELECT {3} FROM [{0}] {1} {2}"; 
+			commandDistinct = "SELECT * FROM (SELECT DISTINCT {3} FROM [{0}] {1}) AS base {2}"; 
 		#endregion
 
 		#region Prepare command
-			command	= string.Format (command,  tableName, 
+			command	= string.Format ((distinct ? commandDistinct : command),
+				tableName, 
 				(criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"), 
-				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy)
-				);
+				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy),
+				fields
+			);
 		#endregion
 
 		#region Run Command
@@ -747,24 +854,82 @@ namespace BaseBLL.Logic
             CommandResult   result    = null;
 			string          tableName = this.GetType ().Name.Replace ("__", ".");
 
-            result = allDataByViewName(tableName, criteria, orderBy, outputAsList, closeConnection, fieldValue);
+            result = allDataByViewName(tableName, "*", criteria, orderBy, false, outputAsList, closeConnection, fieldValue);
 
 			return result;
 		}
 
+
         /// <summary>
-        /// All data
+        /// All data - Distinct
         /// </summary>
         /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
         /// <param name="pageSize"></param>
         /// <param name="criteria"></param>
         /// <param name="outputAsList"></param>
         /// <returns></returns>
-        public virtual CommandResult allDataBySpecifiedFields (string[] fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+        public virtual CommandResult allDataDistinct (string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
-			CommandResult	result		= new CommandResult ();
-			string			command		= "";
-			string			tableName	= "";
+            CommandResult   result    = null;
+			string          tableName = this.GetType ().Name.Replace ("__", ".");
+
+            result = allDataByViewName(tableName, "*", criteria, orderBy, true, outputAsList, closeConnection, fieldValue);
+
+			return result;
+		}
+
+        /// <summary>
+        /// All data - Distinct
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allDataDistinct (string field = "*", string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		{
+            CommandResult   result    = null;
+			string          tableName = this.GetType ().Name.Replace ("__", ".");
+
+            result = allDataByViewName(tableName, field, criteria, orderBy, true, outputAsList, closeConnection, fieldValue);
+
+			return result;
+		}
+
+		/// <summary>
+		/// All Data
+		/// </summary>
+		/// <param name="fields"></param>
+		/// <param name="criteria"></param>
+		/// <param name="orderBy"></param>
+		/// <param name="distinct"></param>
+		/// <param name="outputAsList"></param>
+		/// <param name="closeConnection"></param>
+		/// <param name="fieldValue"></param>
+		/// <returns></returns>
+		public virtual CommandResult allDataBySpecifiedFields (string[] fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		{
+			CommandResult	result	= null;
+
+			result	= allDataBySpecifiedFieldsDistinct (fields, criteria, orderBy, false, outputAsList, closeConnection, fieldValue);
+
+			return result;
+		}
+
+        /// <summary>
+        /// All data Distinct or not
+        /// </summary>
+        /// <param name="pageIndex">-1 : returns all rows, otherwise : results by paging</param>
+        /// <param name="pageSize"></param>
+        /// <param name="criteria"></param>
+        /// <param name="outputAsList"></param>
+        /// <returns></returns>
+        public virtual CommandResult allDataBySpecifiedFieldsDistinct (string[] fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		{
+			CommandResult	result			= new CommandResult ();
+			string			command			= "";
+			string			commandDistinct	= "";
+			string			tableName		= "";
 			
 		#region Validation
 			if ((null == fields) || (fields.Length == 0))
@@ -780,11 +945,12 @@ namespace BaseBLL.Logic
 
 		#region Setup parameters
 			tableName   = GetType ().Name.Replace ("__", ".");
-			command     = "SELECT {3} FROM [{0}] {1} {2}"; 
+			command				= "SELECT {3} FROM [{0}] {1} {2}"; 
+			commandDistinct     = "SELECT * FROM (SELECT DISTINCT {3} FROM [{0}] {1}) AS base {2}"; 
 		#endregion
 
 		#region Prepare command
-			command	= string.Format (command,  tableName, 
+			command	= string.Format ((distinct ? commandDistinct : command ),  tableName, 
 				(criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"), 
 				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy),
 				string.Join (",", fields)
@@ -1076,16 +1242,16 @@ namespace BaseBLL.Logic
 				DataTable		table	= row.Table;
 				PropertyInfo[]	info	= data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance);
 
-				try
-				{
-					foreach (PropertyInfo inf in info)
+				foreach (PropertyInfo inf in info)	
+					try
+					{
 						if (table.Columns.IndexOf (inf.Name) > -1)
 							inf.SetValue (data, (row[inf.Name].GetType () == typeof (DBNull) ? null : row[inf.Name]), null);
-				}
-				catch (Exception ex)
-				{
-					/// TODO: Log Error
-				}
+					}
+					catch (Exception ex)
+					{
+						/// TODO: Log Error
+					}
 			}
 		}
 

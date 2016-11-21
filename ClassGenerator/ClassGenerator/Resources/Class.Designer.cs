@@ -88,9 +88,23 @@ namespace ClassGenerator.Resources {
         ///{{
         ///	public class {2} : BaseBLL.Logic.Base&lt;BLL.Entity{1}.{3}&gt;
         ///	{{
+        ///	#region Constants
+        ///	#endregion
+        ///	
+        ///	#region Properties
+        ///	#endregion
+        ///	
+        ///	#region Variables
+        ///	#endregion
+        ///	
+        ///	#region Constructor
         ///		public {2} (object type) : base (type)
         ///		{{
         ///		}}
+        ///	#endregion		
+        ///		
+        ///	#region Custom Methods
+        ///	#endregion
         ///	}}
         ///}}.
         /// </summary>

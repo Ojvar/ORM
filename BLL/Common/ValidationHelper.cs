@@ -46,7 +46,7 @@ namespace BaseBLL.Common
 					{
 						bool noValidateValue	= Convert.ToBoolean (noValidate);
 
-						if (noValidateValue)
+						if (!noValidateValue)
 						{
 							if (nullable is bool)
 							{

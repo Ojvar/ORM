@@ -33,9 +33,10 @@ namespace BaseDAL.Base
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static SqlConnection generateConnection (string type, string otherParam = "")
+		public static SqlConnection generateConnection (object connType, string otherParam = "")
 		{
-			SqlConnection result = null;
+			SqlConnection	result	= null;
+			string			type	= connType.ToString ();
 
 			if ((dataSources != null) && (dataSources.ContainsKey (type)))
 				result	= new SqlConnection (dataSources[type].connectionString);
