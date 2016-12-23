@@ -225,7 +225,10 @@ namespace BaseBLL.Logic
 							object	infoData	= info.GetValue (data, null);
 
 							// Make Update string
-							updateCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+							if (null == infoData)
+									updateCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
+								else
+									updateCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
 
 							// Get DB type
 							SqlDbType	dbType;
@@ -235,7 +238,7 @@ namespace BaseBLL.Logic
 						}
 
 						if (!updateCriteria.isNullOrEmptyOrWhiteSpaces ())
-							updateCriteria = " WHERE " + updateCriteria.Remove (0, 3);
+							updateCriteria = " WHERE " + updateCriteria.Remove (0, 4);
 					}
 				#endregion
 
@@ -308,7 +311,10 @@ namespace BaseBLL.Logic
 							object	infoData	= info.GetValue (data, null);
 
 							// Make Update string
-							deleteCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+							if (null == infoData)
+								deleteCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
+							else
+								deleteCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
 							
 							// Get DB type
 							SqlDbType	dbType;
@@ -318,7 +324,7 @@ namespace BaseBLL.Logic
 						}
 
 						if (!deleteCriteria.isNullOrEmptyOrWhiteSpaces ())
-							deleteCriteria = " WHERE " + deleteCriteria.Remove (0, 3);
+							deleteCriteria = " WHERE " + deleteCriteria.Remove (0, 4);
 					}
 				#endregion
 
@@ -393,7 +399,10 @@ namespace BaseBLL.Logic
 							object	infoData	= info.GetValue (data, null);
 
 							// Make Update string
-							readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+							if (null == infoData)
+								readCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
+							else
+								readCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
 							
 							// Get DB type
 							SqlDbType	dbType;
@@ -403,7 +412,7 @@ namespace BaseBLL.Logic
 						}
 
 						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
-							readCriteria = " WHERE " + readCriteria.Remove (0, 3);
+							readCriteria = " WHERE " + readCriteria.Remove (0, 4);
 					}
 				#endregion
 
@@ -494,7 +503,10 @@ namespace BaseBLL.Logic
 								object	infoData	= info.GetValue (data, null);
 
 								// Make Update string
-								readCriteria	+= string.Format ("AND ([{0}] = @{0})", info.Name);
+								if (null == infoData)
+									readCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
+								else
+									readCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
 							
 								// Get DB type
 								SqlDbType	dbType;
@@ -506,9 +518,9 @@ namespace BaseBLL.Logic
 
 						// Add User Criterial
 						if (!criteria.isNullOrEmptyOrWhiteSpaces ())
-							readCriteria	= "AND " + criteria + " " + readCriteria;
+							readCriteria	= " AND " + criteria + " " + readCriteria;
 						if (!readCriteria.isNullOrEmptyOrWhiteSpaces ())
-							readCriteria = " WHERE " + readCriteria.Remove (0, 3);
+							readCriteria = " WHERE " + readCriteria.Remove (0, 4);
 					}
 				#endregion
 
