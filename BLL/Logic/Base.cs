@@ -61,6 +61,22 @@ namespace BaseBLL.Logic
 			// Create SqlConnection
 			this.connection	= BaseDAL.Base.Connection.generateConnection (this.datasource);
 		}
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="type"></param>
+		public Base (SqlConnection connection)
+		{
+			// Save Connection type
+			if (null == connection)
+				throw new NullReferenceException ();
+
+			this.datasource	= null;
+
+			// Create SqlConnection
+			this.connection	= connection;
+		}
 	#endregion
 
 	#region Public - CRUD

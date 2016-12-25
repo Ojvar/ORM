@@ -133,6 +133,8 @@ namespace {0}.BLL.Entity{1}
   </data>
   <data name="ClassLogicDefinition" xml:space="preserve">
     <value>using System;
+using System.Data;
+using System.Data.SqlClient;
 using BaseDAL.Model;
 
 namespace {0}.BLL.Logic{1}
@@ -150,6 +152,10 @@ namespace {0}.BLL.Logic{1}
 	
 	#region Constructor
 		public {2} (object type) : base (type)
+		{{
+		}}
+
+		public {2} (SqlConnection conn) : base (conn)
 		{{
 		}}
 	#endregion		

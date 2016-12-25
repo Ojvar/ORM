@@ -82,6 +82,8 @@ namespace ClassGenerator.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
+        ///using System.Data;
+        ///using System.Data.SqlClient;
         ///using BaseDAL.Model;
         ///
         ///namespace {0}.BLL.Logic{1}
@@ -99,6 +101,10 @@ namespace ClassGenerator.Resources {
         ///	
         ///	#region Constructor
         ///		public {2} (object type) : base (type)
+        ///		{{
+        ///		}}
+        ///
+        ///		public {2} (SqlConnection conn) : base (conn)
         ///		{{
         ///		}}
         ///	#endregion		
