@@ -19,6 +19,15 @@ namespace BaseBLL.Logic
 	public class Base<T> : IBase where T : new()
 	{
 	#region Variables
+		/// <summary>
+		/// Transaction
+		/// </summary>
+		public SqlTransaction transactionObject
+		{
+			get;
+			set;
+		}
+
 		public static string	C_TOTAL_ROWS {
 			get
 			{
@@ -85,7 +94,7 @@ namespace BaseBLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult create (object iData, bool closeConnection = true)
+		public virtual CommandResult create (object iData, bool closeConnection = true, string[] exceptFields = null)
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -102,11 +111,11 @@ namespace BaseBLL.Logic
 				PropertyInfo[]		properties	= null;
 				List<KeyValuePair>	fieldValue	= new List<KeyValuePair> ();
 
-			#region Set Command String
+				#region Set Command String
 				tableName	= this.GetType ().Name.Replace ("__", ".");
 				command	= "INSERT INTO [{0}] ({1}) VALUES ({2}); SELECT * FROM [{0}] " +
 					(uniqueCol == "" ? "" : "WHERE ([" + uniqueCol + "] = SCOPE_IDENTITY());");
-			#endregion
+				#endregion
 
 				// Filter Properties by Usage
 				properties	= filterProperties (data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance), EnumUsage.create);
@@ -116,27 +125,36 @@ namespace BaseBLL.Logic
 				#region Prepare insert command parameters
 					foreach (PropertyInfo info in properties)
 					{
+						bool addToFields = true;
+
 						// Get value
 						object	infoData	= info.GetValue (data, null);
 
-						// Make fieldName & fieldValue string
-						fieldName			+= ",[" + info.Name + "]";
-						fieldValueString	+= ",@" + info.Name;
+						if (null != exceptFields) 
+							addToFields	= (Array.IndexOf (exceptFields, info.Name) == -1);
 
-						// Get DB type
-						SqlDbType	dbType;
-						string		sDbType;
-
-						// Get SqlDBType
-						sDbType	= getAttrField (info, "sqlDBType").ToString ();
-						if (!sDbType.isNullOrEmptyOrWhiteSpaces ())
+						if (addToFields)
 						{
-							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), sDbType);
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+							// Make fieldName & fieldValue string
+							fieldName			+= ",[" + info.Name + "]";
+							fieldValueString	+= ",@" + info.Name;
+
+							// Get DB type
+							SqlDbType	dbType;
+							string		sDbType;
+
+							// Get SqlDBType
+							sDbType	= getAttrField (info, "sqlDBType").ToString ();
+
+							if (!sDbType.isNullOrEmptyOrWhiteSpaces ())
+							{
+								dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), sDbType);
+								fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+							}
+							// NO DBTypeFound
+							else
+								fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
 						}
-						// NO DBTypeFound
-						else
-							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData)));
 					}
 
 					if (!fieldName.isNullOrEmptyOrWhiteSpaces ())
@@ -153,7 +171,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, fieldName, fieldValueString);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
 
 					#region Read new Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -183,7 +201,7 @@ namespace BaseBLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult update (object iData, bool closeConnection = true)
+		public virtual CommandResult update (object iData, bool closeConnection = true, string[] exceptFields = null)
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -212,17 +230,25 @@ namespace BaseBLL.Logic
 				#region Prepare Update command parameters
 					foreach (PropertyInfo info in properties)
 					{
+						bool addToFields = true;
+
 						// Get value
 						object	infoData	= info.GetValue (data, null);
 
-						// Make Update string
-						updateStr	+= string.Format (",[{0}] = @{0}", info.Name);
+						if (null != exceptFields) 
+							addToFields	= (Array.IndexOf (exceptFields, info.Name) == -1);
 
-						// Get DB type
-						SqlDbType	dbType;
+						if (addToFields)
+						{
+							// Make Update string
+							updateStr	+= string.Format (",[{0}] = @{0}", info.Name);
 
-						dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
-						fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+							// Get DB type
+							SqlDbType	dbType;
+
+							dbType	= (SqlDbType)Enum.Parse (typeof (SqlDbType), getAttrField (info, "sqlDBType").ToString ());
+							fieldValue.Add (new KeyValuePair ("@" + info.Name, (null == infoData ? DBNull.Value : infoData), dbType));
+						}
 					}
 
 					if (!updateStr.isNullOrEmptyOrWhiteSpaces ())
@@ -242,9 +268,9 @@ namespace BaseBLL.Logic
 
 							// Make Update string
 							if (null == infoData)
-									updateCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
-								else
-									updateCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
+								updateCriteria	+= string.Format (" AND ([{0}] IS NULL)", info.Name);
+							else
+								updateCriteria	+= string.Format (" AND ([{0}] = @{0})", info.Name);
 
 							// Get DB type
 							SqlDbType	dbType;
@@ -265,7 +291,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, updateStr, updateCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -308,17 +334,17 @@ namespace BaseBLL.Logic
 				PropertyInfo[]		properties	= null;
 				List<KeyValuePair>	fieldValue	= new List<KeyValuePair> ();
 
-			#region Set Command String
+				#region Set Command String
 				tableName	= this.GetType ().Name.Replace ("__", ".");
 				command	= "DELETE FROM [{0}] {1}; SELECT @@ROWCOUNT;";
-			#endregion
+				#endregion
 
 				// Filter Properties by Usage
 				properties	= filterProperties (data.GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance), EnumUsage.delete);
 
 				if (null != properties)
 				{
-				#region Create Criteria Command
+					#region Create Criteria Command
 					if (null != properties)
 					{
 						foreach (PropertyInfo info in properties)
@@ -342,18 +368,18 @@ namespace BaseBLL.Logic
 						if (!deleteCriteria.isNullOrEmptyOrWhiteSpaces ())
 							deleteCriteria = " WHERE " + deleteCriteria.Remove (0, 4);
 					}
-				#endregion
+					#endregion
 
-				#region Run Command
+					#region Run Command
 					if (null != connection)
 					{
 						// Setup command string
 						command	= string.Format (command, tableName, deleteCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
 					}
-				#endregion
+					#endregion
 				}
 			}
 			else
@@ -439,7 +465,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, readStr, readCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -547,7 +573,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, readStr, readCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -658,7 +684,7 @@ namespace BaseBLL.Logic
         #region Run Command
             if (null != connection)
             {
-                result = BaseDAL.DBaseHelper.executeCommand(EnumExecuteType.reader, connection, command, closeConnection, fieldValues);
+                result = BaseDAL.DBaseHelper.executeCommand(EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValues);
 
             #region Add total rows count & remove this column from result
                 if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -729,7 +755,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -816,7 +842,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -988,7 +1014,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -1135,7 +1161,7 @@ namespace BaseBLL.Logic
         }
 	#endregion
 
-	#region Foreign Field
+		#region Foreign Field
 		/// <summary>
 		/// Load Foreign Key
 		/// </summary>
@@ -1153,7 +1179,7 @@ namespace BaseBLL.Logic
 
 				if (null != property)
 				{
-				#region Create Logic and run query
+					#region Create Logic and run query
 					object[]	fieldAttr	= property.GetCustomAttributes (typeof (FieldAttribute), true);
 
 					if (null != fieldAttr)
@@ -1166,15 +1192,104 @@ namespace BaseBLL.Logic
 								if (null != logic)
 									result	= logic.allData (string.Format ("([{0}] = @fieldValue)", fieldName), orderBy, outputAsList, closeConnection, new KeyValuePair ("@fieldValue", property.GetValue (data, null)));
 							}
-				#endregion
+					#endregion
 				}
 			}
 
 			return result;
 		}
-	#endregion
+		#endregion
 
-	#region Class Methods
+		#region Stop Transaction
+		/// <summary>
+		/// Begin Transaction
+		/// </summary>
+		/// <param name="commitOldTransaction"></param>
+		public void beginTransaction (bool commitOldTransaction = false)
+		{
+			// Old Transaction
+			stopTransaction (commitOldTransaction);
+
+			if (sqlConnection?.State != ConnectionState.Open)
+				sqlConnection.Open ();
+
+			transactionObject   = this.sqlConnection?.BeginTransaction ();
+		}
+
+		/// <summary>
+		/// Stop Transaction
+		/// </summary>
+		/// <param name="commitOldTransaction"></param>
+		/// <returns></returns>
+		public CommandResult stopTransaction (bool commitOldTransaction = false)
+		{
+			CommandResult result;
+
+			try
+			{
+				if (commitOldTransaction)
+					commitTransaction ();
+				else
+					rollBackTransaction ();
+
+				transactionObject?.Dispose ();
+
+				result  = CommandResult.makeSuccessResult ("OK");
+			}
+			catch (Exception ex)
+			{
+				result  = CommandResult.makeErrorResult (ex.Message, ex);
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Rollback Transaction
+		/// </summary>
+		/// <param name="commitOldTransaction"></param>
+		public CommandResult rollBackTransaction ()
+		{
+			CommandResult result;
+
+			try
+			{
+				transactionObject?.Rollback ();
+
+				result  = CommandResult.makeSuccessResult ("OK", transactionObject);
+			}
+			catch (Exception ex)
+			{
+				result  = CommandResult.makeErrorResult (ex.Message, ex, transactionObject);
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Commit Transaction
+		/// </summary>
+		/// <param name="commitOldTransaction"></param>
+		public CommandResult commitTransaction ()
+		{
+			CommandResult result;
+
+			try
+			{
+				transactionObject?.Commit ();
+
+				result  = CommandResult.makeSuccessResult ("OK", transactionObject);
+			}
+			catch (Exception ex)
+			{
+				result  = CommandResult.makeErrorResult (ex.Message, ex, transactionObject);
+			}
+
+			return result;
+		}
+		#endregion
+
+		#region Class Methods
 		/// <summary>
 		/// Get Field Attribute value
 		/// </summary>

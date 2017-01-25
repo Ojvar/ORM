@@ -72,6 +72,11 @@ namespace BaseDAL
 		/// <returns></returns>
 		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, bool closeConnection = true, params KeyValuePair[] parameters)
 		{
+			return executeCommand (executeType, connection, commandString, closeConnection, null, parameters);
+		}
+
+		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, bool closeConnection = true, SqlTransaction transactionObject = null, params KeyValuePair[] parameters)
+		{
 			CommandResult	result	= new CommandResult ();
 
 			try
@@ -80,16 +85,21 @@ namespace BaseDAL
 				{
 					const string	C_RET_VALUE	= "@__retValue";
 
+					// Disable close connection within transactional mode
+					closeConnection	= (transactionObject == null) && closeConnection;
+
 					if (null != connection)
 					{
-					#region Run Command
+						#region Run Command
 						try
 						{
 							SqlCommand	command		= null;
 
-						#region Prepare command
+							#region Prepare command
 							// Create command
 							command	= new SqlCommand (commandString, connection);
+							if (null != transactionObject)
+								command.Transaction	= transactionObject;
 
 							// Add parameters
 							if (null != parameters)
@@ -118,14 +128,14 @@ namespace BaseDAL
 								Direction		= ParameterDirection.ReturnValue,
 								ParameterName	= C_RET_VALUE
 							});
-						#endregion
+							#endregion
 
-						#region Open Connection
+							#region Open Connection
 							if (connection.State != System.Data.ConnectionState.Open)
 								connection.Open ();
-						#endregion
+							#endregion
 
-						#region Execute
+							#region Execute
 							switch (executeType)
 							{
 								default:
@@ -172,7 +182,7 @@ namespace BaseDAL
 								dt.Load ((SqlDataReader)result.model);
 								result.model	= dt;
 							}
-						#endregion
+							#endregion
 						}
 						catch (Exception ex)
 						{
@@ -186,7 +196,7 @@ namespace BaseDAL
 							if (closeConnection)
 								connection.Close ();
 						}
-					#endregion
+						#endregion
 					}
 					else
 					{

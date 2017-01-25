@@ -4,136 +4,40 @@ using System.Data;
 
 namespace ojvarORM.BLL.Entity
 {
-	public class Document : BaseBLL.Entity.BaseByViewId
+	[Serializable]
+	public class ExceptionLog : BaseBLL.Entity.BaseByViewId
 	{
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.Int,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.Int32 recordsUnitId
-		{
-			get;
-			set;
-		}
-		
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.Int,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.Int32 areaId
+
+		[BaseBLL.Base.Field (nullable = false, sqlDBType = System.Data.SqlDbType.VarChar, primary = false, usage = BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create, size = 50)]
+		public System.String clientIP
 		{
 			get;
 			set;
 		}
 
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.BigInt,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.Int64 mainPlaque
+		[BaseBLL.Base.Field (nullable = false, sqlDBType = System.Data.SqlDbType.VarChar, primary = false, usage = BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create, size = 50)]
+		public System.String clientName
 		{
 			get;
 			set;
 		}
 
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.BigInt,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.Int64 subPlaque
+		[BaseBLL.Base.Field (nullable = false, sqlDBType = System.Data.SqlDbType.Text, primary = false, usage = BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create, size = 2147483647)]
+		public System.String exception
 		{
 			get;
 			set;
 		}
 
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.BigInt,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Int64> implicitPlaque
+		[BaseBLL.Base.Field (nullable = false, sqlDBType = System.Data.SqlDbType.DateTime2, primary = false, usage = BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
+		public System.DateTime insertDate
 		{
 			get;
 			set;
 		}
 
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.NVarChar,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create,size=50)]
-		public System.String assumed
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.NVarChar,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create,size=50)]
-		public System.String piece
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.NVarChar,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create,size=50)]
-		public System.String condominium
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Bit,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Boolean> remaining
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Bit,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Boolean> repeated
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Bit,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Boolean> resume
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.BigInt,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.Int64 Znumber
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.NVarChar,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create,size=255)]
-		public System.String folderName
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Timestamp,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update)]
-		public System.Byte[] Tstamp
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.SmallInt,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Int16> status
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.Date,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.DateTime dateArchives
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Int,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Int32> sectionId
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=false,sqlDBType=System.Data.SqlDbType.DateTime,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public System.DateTime regDate
-		{
-			get;
-			set;
-		}
-
-		[BaseBLL.Base.Field(nullable=true,sqlDBType=System.Data.SqlDbType.Int,primary=false,usage=BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
-		public Nullable<System.Int32> operatorId
+		[BaseBLL.Base.Field (nullable = true, sqlDBType = System.Data.SqlDbType.Int, primary = false, usage = BaseBLL.Base.EnumUsage.read | BaseBLL.Base.EnumUsage.update | BaseBLL.Base.EnumUsage.create)]
+		public Nullable<System.Int32> insertById
 		{
 			get;
 			set;

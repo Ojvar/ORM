@@ -12,10 +12,10 @@ namespace BaseBLL.Interface
 	/// </summary>
 	public interface IBase
 	{
-		CommandResult	create (object iData, bool closeConnection);
+		CommandResult	create (object iData, bool closeConnection, string[] exceptFilelds);
 		CommandResult	read (object iData, bool closeConnection);
 		CommandResult	read (object iData, string field, string criteria, bool closeConnection);
-		CommandResult	update (object iData, bool closeConnection);
+		CommandResult	update (object iData, bool closeConnection, string[] exceptFilelds);
 		CommandResult	delete (object iData, bool closeConnection);
 
 		CommandResult	validate (object iData);

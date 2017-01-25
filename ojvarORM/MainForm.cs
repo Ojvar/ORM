@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BaseDAL.Model;
 
 namespace ojvarORM
 {
@@ -16,9 +17,9 @@ namespace ojvarORM
 			InitializeComponent ();
 		}
 
-		private void Form1_Load (object sender, EventArgs e)
+		private void Form1_Load (object sender, EventArgs ed)
 		{
-		
+			
 		}
 
 		

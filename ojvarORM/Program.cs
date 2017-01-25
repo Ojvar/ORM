@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace ojvarORM
 {
@@ -17,36 +18,33 @@ namespace ojvarORM
 			Application.EnableVisualStyles ();
 			Application.SetCompatibleTextRenderingDefault (false);
 			//Application.Run (new MainForm ());
-			
-			BaseDAL.Base.Connection.dataSources.Add (Common.Enum.DAL.enumConnectionType.Test.ToString (), 
-				new BaseDAL.Model.ConnectionModel () { dataSource=".", initCatalog="ProjectManagement", integratedSec=true });
-			
-			BLL.Logic.Document	lDoc	= new BLL.Logic.Document (Common.Enum.DAL.enumConnectionType.Test.ToString ());
-			
 
-			BLL.Entity.Document	doc	=  new BLL.Entity.Document () { folderName="XBOX" };
-			lDoc.validateSize (doc, "folderName");
-			
-			CommandResult	cR	= lDoc.create (new BLL.Entity.Document () {
-				areaId			= 1,
-				assumed			= "",
-				condominium		= "",
-				dateArchives	= DateTime.Now,
-				folderName		= "XXX",
-				implicitPlaque	= 20,
-				mainPlaque		= 100,
-				operatorId		= 1,
-				piece			= "",
-				recordsUnitId	= 1,
-				regDate			= DateTime.Now,
-				remaining		= true,
-				sectionId		= 1,
-				subPlaque		= 200,
-				Znumber			= 999,
-				resume			= true
+			BaseDAL.Base.Connection.dataSources.Add ("x", new BaseDAL.Model.ConnectionModel ()
+			{
+				dataSource  = "nod7251",
+				initCatalog = "Account",
+				password    = "1365",
+				userId      = "sa"
 			});
 
-			
+			BLL.Logic.ExceptionLog l = new BLL.Logic.ExceptionLog ("x");
+			BLL.Entity.ExceptionLog e = new BLL.Entity.ExceptionLog ();
+
+			e.clientIP		= "ip3333333333";
+			e.clientName    = "name33333333";
+			e.exception     = "exceptio33333333333n";
+
+			CommandResult res;
+
+			l.beginTransaction (false);
+
+			res = l.create (e, true, "insertDate".Split (','));
+
+			e.id = 23;
+			res = l.delete (e);
+
+			res =  l.commitTransaction ();
+			//res =  l.rollBackTransaction ();
 		}
 	}
 }
