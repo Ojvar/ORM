@@ -537,7 +537,7 @@ namespace BaseBLL.Logic
 
 						foreach (string fieldItem in fields)
 						{
-							PropertyInfo	info	= data.GetType ().GetProperty (fieldItem);
+							PropertyInfo	info	= data.GetType ().GetProperty (fieldItem.Trim ());
 
 							if (null != info)
 							{

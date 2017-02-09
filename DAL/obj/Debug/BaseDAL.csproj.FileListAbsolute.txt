@@ -1,5 +1,4 @@
-D:\Source\ojvarORM\DAL\bin\Debug\BaseDAL.dll
-D:\Source\ojvarORM\DAL\bin\Debug\BaseDAL.pdb
-D:\Source\ojvarORM\DAL\obj\Debug\BaseDAL.dll
-D:\Source\ojvarORM\DAL\obj\Debug\BaseDAL.pdb
-D:\Source\ojvarORM\DAL\obj\Debug\BaseDAL.csprojResolveAssemblyReference.cache
+D:\SourceCode\WorkingProjects\OjvarORM\DAL\bin\Debug\BaseDAL.dll
+D:\SourceCode\WorkingProjects\OjvarORM\DAL\bin\Debug\BaseDAL.pdb
+D:\SourceCode\WorkingProjects\OjvarORM\DAL\obj\Debug\BaseDAL.dll
+D:\SourceCode\WorkingProjects\OjvarORM\DAL\obj\Debug\BaseDAL.pdb

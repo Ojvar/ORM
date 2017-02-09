@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace BaseDAL.Model
 {
@@ -17,6 +18,15 @@ namespace BaseDAL.Model
 		/// Key
 		/// </summary>
 		public string key
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// direction
+		/// </summary>
+		public ParameterDirection direction
 		{
 			get;
 			set;
@@ -57,11 +67,12 @@ namespace BaseDAL.Model
 		/// <param name="key"></param>
 		/// <param name="value"></param>
 		/// <param name="metadata"></param>
-		public KeyValuePair (string key, object value, object metadata = null)
+		public KeyValuePair (string key, object value, object metadata = null, ParameterDirection direction = ParameterDirection.Input)
 		{
 			this.key		= key;
 			this.value		= value;
 			this.metadata	= metadata;
+			this.direction	= direction;
 		}
 
 		/// <summary>

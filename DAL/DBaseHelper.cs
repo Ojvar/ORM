@@ -109,15 +109,27 @@ namespace BaseDAL
 										key.value	= (key.value == null ? DBNull.Value : key.value);
 
 										if (!(key.metadata is SqlDbType))
-											command.Parameters.Add (new SqlParameter (key.key, key.value));
+											command.Parameters.Add (new SqlParameter (key.key, key.value)
+											{
+												Direction	= key.direction
+											});
 										else
 										{
 											SqlDbType	dbType	= (SqlDbType)key.metadata;
 
 											if ((dbType == SqlDbType.Structured) && (key.stuctureTypeName != null))
-												command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata) { Value	= key.value, TypeName = key.stuctureTypeName.ToString () });
+												command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata)
+												{
+													Value		= key.value,
+													TypeName	= key.stuctureTypeName.ToString (),
+													Direction	= key.direction
+												});
 											else
-												command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata) { Value	= key.value });
+												command.Parameters.Add (new SqlParameter (key.key, (SqlDbType)key.metadata)
+												{
+													Value		= key.value,
+													Direction	= key.direction
+												});
 										}
 									}
 
@@ -181,6 +193,19 @@ namespace BaseDAL
 						
 								dt.Load ((SqlDataReader)result.model);
 								result.model	= dt;
+							}
+
+							// Set output values
+							foreach (SqlParameter param in command.Parameters)
+							{
+								if ((param.Direction == ParameterDirection.Output) ||
+									(param.Direction == ParameterDirection.InputOutput))
+								{
+									KeyValuePair key = parameters.Where (x => x.key == param.ParameterName).FirstOrDefault ();
+
+									if (key != null)
+										key.value	= param.Value;
+								}
 							}
 							#endregion
 						}

@@ -1,7 +1,7 @@
-D:\Source\ojvarORM\BLL\bin\Debug\BaseBLL.dll
-D:\Source\ojvarORM\BLL\bin\Debug\BaseBLL.pdb
-D:\Source\ojvarORM\BLL\bin\Debug\BaseDAL.dll
-D:\Source\ojvarORM\BLL\bin\Debug\BaseDAL.pdb
-D:\Source\ojvarORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
-D:\Source\ojvarORM\BLL\obj\Debug\BaseBLL.dll
-D:\Source\ojvarORM\BLL\obj\Debug\BaseBLL.pdb
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\bin\Debug\BaseBLL.dll
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\bin\Debug\BaseBLL.pdb
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\bin\Debug\BaseDAL.dll
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\bin\Debug\BaseDAL.pdb
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.dll
+D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.pdb
