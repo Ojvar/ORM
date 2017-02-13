@@ -5,3 +5,10 @@ D:\SourceCode\WorkingProjects\OjvarORM\BLL\bin\Debug\BaseDAL.pdb
 D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
 D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.dll
 D:\SourceCode\WorkingProjects\OjvarORM\BLL\obj\Debug\BaseBLL.pdb
+D:\Source\Codes\OpenSource\ORM\BLL\bin\Debug\BaseBLL.dll
+D:\Source\Codes\OpenSource\ORM\BLL\bin\Debug\BaseBLL.pdb
+D:\Source\Codes\OpenSource\ORM\BLL\bin\Debug\BaseDAL.dll
+D:\Source\Codes\OpenSource\ORM\BLL\bin\Debug\BaseDAL.pdb
+D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
+D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.dll
+D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.pdb

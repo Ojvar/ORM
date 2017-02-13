@@ -59,7 +59,7 @@ namespace BaseBLL.Logic
 		/// Constructor
 		/// </summary>
 		/// <param name="type"></param>
-		public Base (object dataSource)
+		public Base (object dataSource, SqlTransaction transactionObject = null)
 		{
 			// Save Connection type
 			if (null == dataSource)
@@ -68,14 +68,15 @@ namespace BaseBLL.Logic
 			this.datasource	= dataSource.ToString ();
 
 			// Create SqlConnection
-			this.connection	= BaseDAL.Base.Connection.generateConnection (this.datasource);
+			this.connection			= BaseDAL.Base.Connection.generateConnection (this.datasource);
+			this.transactionObject	= transactionObject;
 		}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="type"></param>
-		public Base (SqlConnection connection)
+		public Base (SqlConnection connection, SqlTransaction transactionObject = null)
 		{
 			// Save Connection type
 			if (null == connection)
@@ -84,7 +85,8 @@ namespace BaseBLL.Logic
 			this.datasource	= null;
 
 			// Create SqlConnection
-			this.connection	= connection;
+			this.connection			= connection;
+			this.transactionObject	= transactionObject;
 		}
 	#endregion
 
@@ -1277,7 +1279,6 @@ namespace BaseBLL.Logic
 			try
 			{
 				transactionObject?.Commit ();
-
 				result  = CommandResult.makeSuccessResult ("OK", transactionObject);
 			}
 			catch (Exception ex)

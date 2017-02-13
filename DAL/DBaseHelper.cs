@@ -18,10 +18,10 @@ namespace BaseDAL
 		/// <summary>
 		/// Sync Object
 		/// </summary>
-		private static object objSync = new object (); 
-	#endregion
+		private static object objSync = new object ();
+		#endregion
 
-	#region Methods
+		#region Methods
 		/// <summary>
 		/// Check Connection
 		/// </summary>
@@ -97,9 +97,9 @@ namespace BaseDAL
 
 							#region Prepare command
 							// Create command
-							command	= new SqlCommand (commandString, connection);
 							if (null != transactionObject)
-								command.Transaction	= transactionObject;
+								command	= new SqlCommand (commandString, transactionObject.Connection??connection);
+							command.Transaction	= transactionObject;
 
 							// Add parameters
 							if (null != parameters)
