@@ -37,3 +37,16 @@ D:\Source\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.csprojResolveAssembly
 D:\Source\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.MainForm.resources
 D:\Source\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.Properties.Resources.resources
 D:\Source\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.csproj.GenerateResource.Cache
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\ojvarORM.exe.config
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.exe
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.pdb
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\ojvarORM.exe
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\ojvarORM.pdb
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\BaseBLL.dll
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\BaseDAL.dll
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\BaseBLL.pdb
+F:\Codes\OpenSource\ORM\ojvarORM\bin\Debug\BaseDAL.pdb
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.csprojResolveAssemblyReference.cache
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.MainForm.resources
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.Properties.Resources.resources
+F:\Codes\OpenSource\ORM\ojvarORM\obj\Debug\ojvarORM.csproj.GenerateResource.Cache

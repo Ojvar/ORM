@@ -4,6 +4,10 @@ D:\SourceCode\WorkingProjects\OjvarORM\DAL\obj\Debug\BaseDAL.dll
 D:\SourceCode\WorkingProjects\OjvarORM\DAL\obj\Debug\BaseDAL.pdb
 D:\Source\Codes\OpenSource\ORM\DAL\bin\Debug\BaseDAL.dll
 D:\Source\Codes\OpenSource\ORM\DAL\bin\Debug\BaseDAL.pdb
-D:\Source\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.csprojResolveAssemblyReference.cache
 D:\Source\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.dll
 D:\Source\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.pdb
+F:\Codes\OpenSource\ORM\DAL\bin\Debug\BaseDAL.dll
+F:\Codes\OpenSource\ORM\DAL\bin\Debug\BaseDAL.pdb
+F:\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.csprojResolveAssemblyReference.cache
+F:\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.dll
+F:\Codes\OpenSource\ORM\DAL\obj\Debug\BaseDAL.pdb

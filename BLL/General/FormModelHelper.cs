@@ -60,6 +60,8 @@ namespace BaseBLL.General
 									else
 										((ComboBox)ctl).SelectedValue	= iValue;
 								}
+								else if (ctl is CheckBox)
+									((CheckBox)ctl).Checked		= Convert.ToBoolean (iValue);
 							}
 							catch
                             {
@@ -105,6 +107,8 @@ namespace BaseBLL.General
 									value	= ((NumericUpDown)ctl).Value;
 								else if (ctl is ComboBox)
 									value	= ((ComboBox)ctl).SelectedValue;
+								else if (ctl is CheckBox)
+									value	= ((CheckBox)ctl).Checked;
 
 								if (Nullable.GetUnderlyingType (info.PropertyType) != null)
 									info.SetValue (data, value, null);

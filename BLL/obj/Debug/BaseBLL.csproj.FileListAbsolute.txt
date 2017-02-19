@@ -12,3 +12,10 @@ D:\Source\Codes\OpenSource\ORM\BLL\bin\Debug\BaseDAL.pdb
 D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
 D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.dll
 D:\Source\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.pdb
+F:\Codes\OpenSource\ORM\BLL\bin\Debug\BaseBLL.dll
+F:\Codes\OpenSource\ORM\BLL\bin\Debug\BaseBLL.pdb
+F:\Codes\OpenSource\ORM\BLL\bin\Debug\BaseDAL.dll
+F:\Codes\OpenSource\ORM\BLL\bin\Debug\BaseDAL.pdb
+F:\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.csprojResolveAssemblyReference.cache
+F:\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.dll
+F:\Codes\OpenSource\ORM\BLL\obj\Debug\BaseBLL.pdb

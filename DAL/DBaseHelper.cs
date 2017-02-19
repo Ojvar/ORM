@@ -14,7 +14,7 @@ namespace BaseDAL
 	/// </summary>
 	public static class DBaseHelper
 	{
-	#region Variables
+	    #region Variables
 		/// <summary>
 		/// Sync Object
 		/// </summary>
@@ -98,8 +98,10 @@ namespace BaseDAL
 							#region Prepare command
 							// Create command
 							if (null != transactionObject)
-								command	= new SqlCommand (commandString, transactionObject.Connection??connection);
-							command.Transaction	= transactionObject;
+								command	= new SqlCommand (commandString, transactionObject.Connection);
+                            else
+								command	= new SqlCommand (commandString, connection);
+                            command.Transaction	= transactionObject;
 
 							// Add parameters
 							if (null != parameters)
