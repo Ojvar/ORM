@@ -64,18 +64,17 @@ namespace BaseDAL
 		}
 
 		/// <summary>
-		/// Execute Scaler
+		/// Execute Command
 		/// </summary>
-		/// <param name="connection"></param>
-		/// <param name="command"></param>
-		/// <param name="parameters"></param>
-		/// <returns></returns>
 		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, bool closeConnection = true, params KeyValuePair[] parameters)
 		{
-			return executeCommand (executeType, connection, commandString, closeConnection, null, parameters);
+			return executeCommand (executeType, connection, commandString, null, closeConnection, parameters);
 		}
 
-		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, bool closeConnection = true, SqlTransaction transactionObject = null, params KeyValuePair[] parameters)
+		/// <summary>
+		/// Execute Command
+		/// </summary>
+		public static CommandResult executeCommand (EnumExecuteType executeType, SqlConnection connection, string commandString, SqlTransaction transactionObject = null, bool closeConnection = true, params KeyValuePair[] parameters)
 		{
 			CommandResult	result	= new CommandResult ();
 

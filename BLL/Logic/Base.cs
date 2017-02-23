@@ -18,7 +18,11 @@ namespace BaseBLL.Logic
 	/// </summary>
 	public class Base<T> : IBase where T : new()
 	{
-	#region Variables
+		#region Constants
+		public const string C_FIELD_SEPARATOR = ";,\t\n";
+		#endregion
+
+		#region Variables
 		/// <summary>
 		/// Transaction
 		/// </summary>
@@ -96,7 +100,7 @@ namespace BaseBLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult create (object iData, bool closeConnection = true, string[] exceptFields = null)
+		public virtual CommandResult create (object iData, bool closeConnection = true, string exceptField = "")
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -125,6 +129,8 @@ namespace BaseBLL.Logic
 				if (null != properties)
 				{
 				#region Prepare insert command parameters
+					string[] exceptFields	= exceptField.Split (C_FIELD_SEPARATOR.ToCharArray (), StringSplitOptions.RemoveEmptyEntries);
+
 					foreach (PropertyInfo info in properties)
 					{
 						bool addToFields = true;
@@ -173,7 +179,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, fieldName, fieldValueString);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue.ToArray ());
 
 					#region Read new Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -203,7 +209,7 @@ namespace BaseBLL.Logic
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual CommandResult update (object iData, bool closeConnection = true, string[] exceptFields = null)
+		public virtual CommandResult update (object iData, bool closeConnection = true, string exceptField = "")
 		{
 			CommandResult	result	= new CommandResult ();
 
@@ -211,10 +217,11 @@ namespace BaseBLL.Logic
 			{
 				T data	= (T)iData;
 
-				string	command			= "";
-				string	updateStr		= "";
-				string	updateCriteria	= "";
-				string	tableName		= "";
+				string[]	exceptFields	= exceptField.Split (C_FIELD_SEPARATOR.ToCharArray (), StringSplitOptions.RemoveEmptyEntries);
+				string		command			= "";
+				string		updateStr		= "";
+				string		updateCriteria	= "";
+				string		tableName		= "";
 
 				PropertyInfo[]		properties	= null;
 				List<KeyValuePair>	fieldValue	= new List<KeyValuePair> ();
@@ -293,7 +300,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, updateStr, updateCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -379,7 +386,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, deleteCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.scaler, connection, command, transactionObject, closeConnection, fieldValue.ToArray ());
 					}
 					#endregion
 				}
@@ -467,7 +474,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, readStr, readCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -575,7 +582,7 @@ namespace BaseBLL.Logic
 						command	= string.Format (command, tableName, readStr, readCriteria);
 
 						// Run Command
-						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue.ToArray ());
+						result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue.ToArray ());
 
 					#region Read updated Record data & save into "data"
 						if (result.status == EnumCommandStatus.success)
@@ -686,7 +693,7 @@ namespace BaseBLL.Logic
         #region Run Command
             if (null != connection)
             {
-                result = BaseDAL.DBaseHelper.executeCommand(EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValues);
+                result = BaseDAL.DBaseHelper.executeCommand(EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValues);
 
             #region Add total rows count & remove this column from result
                 if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -757,7 +764,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -844,7 +851,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))
@@ -1016,7 +1023,7 @@ namespace BaseBLL.Logic
 		#region Run Command
 			if (null != connection)
 			{
-				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, closeConnection, transactionObject, fieldValue);
+				result	= BaseDAL.DBaseHelper.executeCommand (EnumExecuteType.reader, connection, command, transactionObject, closeConnection, fieldValue);
 
 			#region Add total rows count & remove this column from result
 				if ((null != result) && (result.status == EnumCommandStatus.success))

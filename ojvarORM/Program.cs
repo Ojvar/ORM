@@ -38,7 +38,7 @@ namespace ojvarORM
 
 			l.beginTransaction (false);
 
-			res = l.create (e, true, "insertDate".Split (','));
+			res = l.create (e, true, "insertDate");
 
 			e.id = 23;
 			res = l.delete (e);
