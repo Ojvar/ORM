@@ -27,8 +27,8 @@ namespace BaseBLL.Interface
 		CommandResult	allData (string criteria, string orderBy, bool outputAsList , bool closeConnection, params KeyValuePair[] fieldValue);
 		CommandResult   allDataByViewName (string viewName, string fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue);
 		CommandResult	allByViewNameByPaging (string viewName, int pageIndex, int pageSize, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValues);
-		CommandResult	allDataBySpecifiedFields (string[] fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue);
-		CommandResult	allDataBySpecifiedFieldsDistinct (string[] fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue);
+		CommandResult	allDataBySpecifiedFields (string fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue);
+		CommandResult	allDataBySpecifiedFieldsDistinct (string fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue);
 
 		CommandResult	allDataDistinct (string criteria, string orderBy, bool outputAsList , bool closeConnection, params KeyValuePair[] fieldValue);
 		CommandResult	allDataDistinct (string fields, string criteria, string orderBy, bool outputAsList , bool closeConnection, params KeyValuePair[] fieldValue);

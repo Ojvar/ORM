@@ -970,7 +970,7 @@ namespace BaseBLL.Logic
 		/// <param name="closeConnection"></param>
 		/// <param name="fieldValue"></param>
 		/// <returns></returns>
-		public virtual CommandResult allDataBySpecifiedFields (string[] fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+		public virtual CommandResult allDataBySpecifiedFields (string fields, string criteria = "", string orderBy = "", bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
 			CommandResult	result	= null;
 
@@ -987,15 +987,16 @@ namespace BaseBLL.Logic
         /// <param name="criteria"></param>
         /// <param name="outputAsList"></param>
         /// <returns></returns>
-        public virtual CommandResult allDataBySpecifiedFieldsDistinct (string[] fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
+        public virtual CommandResult allDataBySpecifiedFieldsDistinct (string fields, string criteria = "", string orderBy = "", bool distinct = false, bool outputAsList = true, bool closeConnection = true, params KeyValuePair[] fieldValue)
 		{
 			CommandResult	result			= new CommandResult ();
 			string			command			= "";
 			string			commandDistinct	= "";
 			string			tableName		= "";
+			string[]		fieldsArr		= fields.Split (C_FIELD_SEPARATOR.ToCharArray (), StringSplitOptions.RemoveEmptyEntries);
 			
 		#region Validation
-			if ((null == fields) || (fields.Length == 0))
+			if ((null == fieldsArr) || (fieldsArr.Length == 0))
 			{
 				result.status	= EnumCommandStatus.operationFailed;
 				result.message	= "Field(s) data can't be null or empty!";
@@ -1016,7 +1017,7 @@ namespace BaseBLL.Logic
 			command	= string.Format ((distinct ? commandDistinct : command ),  tableName, 
 				(criteria.isNullOrEmptyOrWhiteSpaces () ? "" : " WHERE (" + criteria + ")"), 
 				(orderBy.isNullOrEmptyOrWhiteSpaces () ? "" : " ORDER BY " + orderBy),
-				string.Join (",", fields)
+				string.Join (",", fieldsArr)
 				);
 		#endregion
 
