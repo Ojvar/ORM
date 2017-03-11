@@ -147,7 +147,7 @@
 
 			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3} }};
 			logic	= new BLL.Logic{8}.{1} ("{6}");
-			logic.read (entity);
+			logic.read (entity, "{5}");
 
 			_{2}_{3}	= entity;
 		}}
@@ -180,7 +180,7 @@
 
 			entity	= new BLL.Entity{8}.{0} () {{ {5} = {3}.Value }};
 			logic	= new BLL.Logic{8}.{1} ("{6}");
-			logic.read (entity);
+			logic.read (entity, "{5}");
 
 			_{2}_{3}	= entity;
 		}}
